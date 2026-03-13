@@ -16,3 +16,4 @@ Ominaisuuksia:
 
 *Aluksi tarkoitus tehdä helppo versio siten, että raitojen määrä on rajattu ja äänien toisto tehdään yksinkertaisimmalla tavalla (pygame mixer esim.)*
 
+[Laskuharjoitukset](/laskarit/)
