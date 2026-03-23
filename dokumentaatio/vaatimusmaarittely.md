@@ -2,7 +2,7 @@
 
 ## Sovelluksen tarkoitus
 
-Sovelluksella voi rakentaa lyhyitä looppaavia audioekvenssejä, esim. rumpukomppeja, käyttämällä lyhyitä äänitiedostoja jotka sovellus toistaa käyttäjän valitsemassa järjestyksessä eri raidoilla. Valmiin sekvenssin voi tallentaa .wav muodossa.
+Sovelluksella voi rakentaa lyhyitä looppaavia audiosekvenssejä, esim. rumpukomppeja, käyttämällä lyhyitä äänitiedostoja jotka sovellus toistaa käyttäjän valitsemassa järjestyksessä eri raidoilla. Valmiin sekvenssin voi tallentaa .wav muodossa.
 
 ## Käyttöliittymä
 
