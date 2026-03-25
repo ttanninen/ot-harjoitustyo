@@ -16,12 +16,12 @@
     Ruutu "1" -- "0..8" Pelinappula
     Ruutu <|-- Aloitusruutu
     Ruutu <|-- Vankila
-    Ruutu <|-- SattumaRuutu
-    SattumaRuutu "1" -- "*" SattumaKortti
-    SattumaKortti "1" -- "1" Toiminto
-    Ruutu <|-- YhteismaaRuutu
-    YhteismaaRuutu "1" -- "*" YhteismaaKortti
-    YhteismaaKortti "1" -- "1" Toiminto
+    Ruutu <|-- Sattumaruutu
+    Sattumaruutu "1" -- "*" Sattumakortti
+    Sattumakortti "1" -- "1" Toiminto
+    Ruutu <|-- Yhteismaaruutu
+    Yhteismaaruutu "1" -- "*" Yhteismaakortti
+    Yhteismaakortti "1" -- "1" Toiminto
     Ruutu <|-- Asema
     Ruutu <|-- Laitos
     Ruutu <|-- Katu
