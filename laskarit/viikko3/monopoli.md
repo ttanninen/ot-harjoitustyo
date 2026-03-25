@@ -17,19 +17,21 @@
     Ruutu <|-- Aloitusruutu
     Ruutu <|-- Vankila
     Ruutu <|-- SattumaRuutu
+    Sattumaruutu "1" -- "*" SattumaKortti
     SattumaKortti "1" -- "1" Toiminto
     Ruutu <|-- YhteismaaRuutu
+    YhteismaaRuutu "1" -- "*" YhteismaaKortti
     Yhteismaakortti "1" -- "1" Toiminto
     Ruutu <|-- Asema
     Ruutu <|-- Laitos
     Ruutu <|-- Katu
     Katu : Nimi
 
-    Talo "4" -- "1" Katu
-    Hotelli "1" -- "1" Katu
+    Katu "1" -- Talo "0..4"
+    Katu "1" -- Hotelli "0..1"
 
-    Raha "*" -- "1" Pelaaja
-    Katu "1" -- "1" Pelaaja
+    Pelaaja : Raha
+    Katu "0..1" -- "1" Pelaaja
 
 ```
 
