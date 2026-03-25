@@ -17,11 +17,11 @@
     Ruutu <|-- Aloitusruutu
     Ruutu <|-- Vankila
     Ruutu <|-- SattumaRuutu
-    Sattumaruutu "1" -- "*" SattumaKortti
+    SattumaRuutu "1" -- "*" SattumaKortti
     SattumaKortti "1" -- "1" Toiminto
     Ruutu <|-- YhteismaaRuutu
     YhteismaaRuutu "1" -- "*" YhteismaaKortti
-    Yhteismaakortti "1" -- "1" Toiminto
+    YhteismaaKortti "1" -- "1" Toiminto
     Ruutu <|-- Asema
     Ruutu <|-- Laitos
     Ruutu <|-- Katu
