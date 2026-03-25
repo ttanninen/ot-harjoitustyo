@@ -6,7 +6,7 @@ sequenceDiagram
   participant rautatietori
   participant ratikka6
   participant bussi244
-  participant kioski
+  participant lippu_luukku
   participant kallen_kortti
   
     main ->> laitehallinto: HKLLaitehallinto()
@@ -17,5 +17,8 @@ sequenceDiagram
     main ->> laitehallinto: lisaa_lataaja(rautatietori)
     main ->> laitehallinto: lisaa_lukija(ratikka6)
     main ->> laitehallinto: lisaa_lukija(bussi244)
+
+    main ->> lippu_luukku: Kioski()
+ 
 
 ```
