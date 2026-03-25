@@ -12,6 +12,6 @@ sequenceDiagram
     main ->> laitehallinto: HKLLaitehallinto()
     laitehallinto ->> rautatietori: Lataajalaite()
     laitehallinto ->> ratikka6: Lukijalaite()
-    laitehallinto ->> bussi244 = Lukijalaite()
+    laitehallinto ->> bussi244: Lukijalaite()
 
 ```
