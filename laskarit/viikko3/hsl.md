@@ -21,7 +21,7 @@ sequenceDiagram
     main ->> lippu_luukku: Kioski()
 
     main ->> lippu_luukku: osta_matkakortti("Kalle")
-    lippu_luukku -> kallen_kortti: uusi_kortti
+    lippu_luukku ->> kallen_kortti: uusi_kortti
 
     main ->> rautatietori: lataa_arvoa(kallen_kortti, 3)
     rautatietori ->> kallen_kortti: kallen_kortti.kasvata_arvoa(3)
@@ -30,8 +30,8 @@ sequenceDiagram
     ratikka6 ->> kallen_kortti: kallen_kortti.vahenna_arvoa(1.5)
     ratikka6 ->> main: True
 
-    main ->> bussi244: osta_lippu(kallen_kortti, 1)
-    bussi244 ->> kallen_kortti: kallen.kortti.vahenna_arvoa(2.1)
-    bussi244 ->> main: False 
+    main ->> bussi244: osta_lippu(kallen_kortti, 2)
+    bussi244 ->> kallen_kortti: kallen.kortti.vahenna_arvoa(3.5)
+    bussi244 ->> main: False
 
 ```
