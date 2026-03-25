@@ -1,3 +1,5 @@
+```mermaid
+
 sequenceDiagram
   participant main
   participant laitehallinto
@@ -11,3 +13,5 @@ sequenceDiagram
     laitehallinto ->> rautatietori: Lataajalaite()
     laitehallinto ->> ratikka6: Lukijalaite()
     laitehallinto ->> bussi244 = Lukijalaite()
+
+```
