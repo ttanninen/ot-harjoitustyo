@@ -28,10 +28,8 @@ sequenceDiagram
 
     main ->> ratikka6: osta_lippu(kallen_kortti, 0)
     ratikka6 ->> kallen_kortti: kallen_kortti.vahenna_arvoa(1.5)
-    ratikka6 ->> main: True
 
     main ->> bussi244: osta_lippu(kallen_kortti, 2)
-    bussi244 ->> kallen_kortti: kallen.kortti.vahenna_arvoa(3.5)
-    bussi244 ->> main: False
+    bussi244 ->> kallen_kortti: kallen_kortti.vahenna_arvoa(3.5)
 
 ```
