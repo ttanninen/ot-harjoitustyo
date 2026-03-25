@@ -14,4 +14,8 @@ sequenceDiagram
     laitehallinto ->> ratikka6: Lukijalaite()
     laitehallinto ->> bussi244: Lukijalaite()
 
+    main ->> laitehallinto: lisaa_lataaja(rautatietori)
+    main ->> laitehallinto: lisaa_lukija(ratikka6)
+    main ->> laitehallinto: lisaa_lukija(bussi244)
+
 ```
