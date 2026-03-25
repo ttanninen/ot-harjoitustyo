@@ -27,8 +27,8 @@
     Ruutu <|-- Katu
     Katu : Nimi
 
-    Katu "1" -- Talo "0..4"
-    Katu "1" -- Hotelli "0..1"
+    Katu "1" -- "0..4" Talo 
+    Katu "1" -- "0..1" Hotelli 
 
     Pelaaja : Raha
     Katu "0..1" -- "1" Pelaaja
