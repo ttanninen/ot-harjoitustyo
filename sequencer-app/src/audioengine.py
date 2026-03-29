@@ -5,5 +5,6 @@ from pygame import mixer
 
 mixer.init()
 
-def play(sample):
-    mixer.play(sample)
+def play(filename):
+    sound = mixer.Sound(filename)
+    sound.play()
