@@ -10,6 +10,7 @@ class Track:
         self.pattern = np.array(pattern if pattern is not None else [])
 
     def replace_pattern(self, new_pattern):
+        # Replace whole pattern
         self.pattern = np.array(new_pattern)
 
     def write_step(self, step):
@@ -19,6 +20,7 @@ class Track:
         self.pattern[step] = 0
 
     def set_length(self, number_of_steps):
+        # Create an empty pattern of length n
         self.pattern = np.array([0 for s in range(number_of_steps)])
 
 

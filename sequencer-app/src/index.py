@@ -4,7 +4,7 @@ import sequencer
 sequence = sequencer.Sequence(128, 4)
 
 # Create new track
-track1 = sequencer.Track("sequencer-app/src/samples/bd01.wav", "BD")
+track1 = sequencer.Track("src/samples/bd01.wav", "BD")
 
 # Create 16-step pattern
 track1.set_length(16)
