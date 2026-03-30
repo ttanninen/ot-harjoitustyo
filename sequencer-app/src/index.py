@@ -13,8 +13,13 @@ track1.replace_pattern([1,0,0,0, 1,0,1,0])
 # Load track 1 to sequence
 sequence.add_track(track1)
 
-sequence.play()
+print("Test commands:\nP play\nS stop\nE Exit")
 
-time.sleep(4)
-
-sequence.stop()
+while True:
+    command = input("Enter command: ")
+    if command == "P":
+        sequence.play()
+    elif command == "S":
+        sequence.stop()
+    else:
+        break
