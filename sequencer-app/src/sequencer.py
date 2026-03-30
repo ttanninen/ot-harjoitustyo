@@ -1,5 +1,6 @@
 import numpy as np
 import audioengine as audio
+import threading
 import clock
 
 class Track:
@@ -25,10 +26,16 @@ class Sequence:
         self.tracklist.append(Track)
 
     def play(self):
-        current_step = 0
-        last_step_time = clock.get_ticks()
+        if self.playing:
+            return
         
         self.playing = True
+        thread = threading.Thread(target=self.play_loop, daemon=True)
+        thread.start()
+
+    def play_loop(self):
+        current_step = 0
+        last_step_time = clock.get_ticks()
 
         while self.playing is True:
             now = clock.get_ticks()
@@ -38,6 +45,7 @@ class Sequence:
 
                 current_step = (current_step + 1) % self.length()
                 last_step_time = now
+
             clock.tick()
 
     def stop(self):
