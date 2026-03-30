@@ -1,6 +1,6 @@
 from pygame import time
 
-### Pygame for demo purposes ###
+### Pygame clock for demo purposes ###
 ### Will be replaced with separate thread master clock ###
 
 clock = time.Clock()
