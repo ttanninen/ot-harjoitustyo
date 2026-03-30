@@ -1,4 +1,4 @@
-# Ohjemistotekniikka harjoitustyö
+# Ohjelmistotekniikka harjoitustyö
 
 **Yksinkertainen sampleri / sekvensseri**
 
@@ -14,10 +14,10 @@ Ominaisuuksia:
 - Sekvenssin tallentaminen .wav:iksi
 - Sekvenssin looppaaminen
 
-*Aluksi tarkoitus tehdä helppo versio siten, että raitojen määrä on rajattu ja äänien toisto tehdään yksinkertaisimmalla tavalla (pygame mixer esim.)*
 
-[Laskuharjoitukset](/laskarit/)
+## Dokumentaatio
+
 
 [Vaatimusmäärittely](/dokumentaatio/vaatimusmaarittely.md)
-
 [Tuntikirjanpito](/dokumentaatio/tuntikirjanpito.md)
+[Changelog](/dokumentaatio/changelog.md)
