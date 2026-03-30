@@ -1,10 +1,14 @@
 import sequencer
+import os
+
+dirname = os.path.dirname(__file__)
 
 # Create new sequence
 sequence = sequencer.Sequence(128, 4)
 
 # Create new track
-track1 = sequencer.Track("src/samples/bd01.wav", "BD")
+test_sample = os.path.join(dirname, "samples", "bd01.wav")
+track1 = sequencer.Track(test_sample, "BD")
 
 # Create 16-step pattern
 track1.set_length(16)
