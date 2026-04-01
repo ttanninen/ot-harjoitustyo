@@ -18,6 +18,6 @@ Ominaisuuksia:
 ## Dokumentaatio
 
 
-- [Vaatimusmäärittely](/dokumentaatio/vaatimusmaarittely.md)
-- [Tuntikirjanpito](/dokumentaatio/tuntikirjanpito.md)
-- [Changelog](/dokumentaatio/changelog.md)
+- [Vaatimusmäärittely](/sequencer-app/dokumentaatio/vaatimusmaarittely.md)
+- [Tuntikirjanpito](/sequencer-app/dokumentaatio/tuntikirjanpito.md)
+- [Changelog](/sequencer-app/dokumentaatio/changelog.md)
