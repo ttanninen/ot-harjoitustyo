@@ -37,11 +37,20 @@ class Sequence:
         self._current_step = 0
         self._thread = None
 
-    def step_duration(self):
-        return (60 / self.bpm) /self.steps_per_beat * 1000
+    ### Track management
 
     def add_track(self, Track):
         self.tracks.append(Track)
+
+    def length(self):
+        return max([len(track.pattern) for track in self.tracks])
+
+    ### Track timing
+
+    def step_duration(self):
+        return (60 / self.bpm) /self.steps_per_beat * 1000
+
+    ### Playback controls
 
     def play(self):
         if self._playing: # If already playing, do nothing
@@ -58,6 +67,17 @@ class Sequence:
         # Run audio playback in separate thread
         self._thread = threading.Thread(target=self._play_loop, daemon=True)
         self._thread.start()
+
+    def pause(self):
+        if self._playing:
+            self._playing = False
+            self._paused = True
+            
+    def stop(self):
+        self._playing = False
+
+
+    ### Internal loop controls
 
     def _play_trigger(self, step):
         for track in self.tracks:
@@ -76,13 +96,4 @@ class Sequence:
 
             clock.tick()
 
-    def pause(self):
-        if self._playing:
-            self._playing = False
-            self._paused = True
-            
-    def stop(self):
-        self._playing = False
 
-    def length(self):
-        return max([len(track.pattern) for track in self.tracks])
