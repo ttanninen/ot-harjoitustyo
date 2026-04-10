@@ -66,8 +66,8 @@ class AudioEngine:
             chunk = chunk * sound.volume
 
             # Control pan:
-            left_gain = (1 - sound.pan) / 2
-            right_gain = (1 + sound.pan) / 2
+            left_gain = (1.0 - sound.pan) / 2.0
+            right_gain = (1.0 + sound.pan) / 2.0
 
             buffer[:length, 0] += chunk * left_gain
             buffer[:length, 1] += chunk * right_gain
