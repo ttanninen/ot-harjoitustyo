@@ -31,7 +31,11 @@ class Sequence:
         self.steps_per_beat = steps_per_beat
         self.engine = engine
         self.tracks = tracks if tracks is not None else []
-        self.playing = False
+        
+        self._playing = False
+        self._paused = False
+        self._current_step = 0
+        self._thread = None
 
     def step_duration(self):
         return (60 / self.bpm) /self.steps_per_beat * 1000
@@ -40,29 +44,29 @@ class Sequence:
         self.tracks.append(Track)
 
     def play(self):
-        if self.playing: # If already playing, do nothing
+        if self._playing: # If already playing, do nothing
             return
         
-        self.playing = True
+        self._playing = True
         # Run audio playback in separate thread
-        thread = threading.Thread(target=self.play_loop, daemon=True)
-        thread.start()
+        self._thread = threading.Thread(target=self._play_loop, daemon=True)
+        self._thread.start()
 
-    def play_trigger(self, step):
+    def _play_trigger(self, step):
         for track in self.tracks:
             if track.pattern[step] == 1:
                 self.engine.play(track.data)
 
-    def play_loop(self):
+    def _play_loop(self):
         # Play from the beginning
-        current_step = 0
+        self._current_step = 0
         last_step_time = self.step_duration()
 
-        while self.playing is True:
+        while self._playing:
             now = clock.get_ticks()
             if now - last_step_time >= self.step_duration():
-                self.play_trigger(current_step)
-                current_step = (current_step + 1) % self.length()
+                self._play_trigger(self._current_step)
+                self._current_step = (self._current_step + 1) % self.length()
                 last_step_time = now
 
             clock.tick()
@@ -75,7 +79,7 @@ class Sequence:
         pass
         
     def stop(self):
-        self.playing = False
+        self._playing = False
 
     def length(self):
         return max([len(track.pattern) for track in self.tracks])
