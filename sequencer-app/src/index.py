@@ -1,5 +1,6 @@
 import sequencer
 import os
+from audioengine import AudioEngine
 
 # Clear terminal screen:
 os.system("cls" if os.name == "nt" else "clear")
@@ -20,8 +21,14 @@ track1.write_step(4)
 track1.write_step(8)
 track1.write_step(12)
 
+# Initialize audioengine:
+engine = AudioEngine()
+
 # Create new sequence
-sequence = sequencer.Sequence(128, 4)
+sequence = sequencer.Sequence(128, 4, engine)
+
+# Fire up the audio stream
+sequence.engine.start()
 
 # Load track 1 to sequence
 sequence.add_track(track1)
@@ -56,4 +63,5 @@ while True:
             else:
                 break
     else:
+        sequence.engine.stop()
         break
