@@ -1,13 +1,14 @@
 import numpy as np
 import threading
-import audioengine as audio
 import clock
+from audioengine import AudioEngine, load_sound
 
 class Track:
     def __init__(self, filename, name, pattern=None):
         self.filename = filename
         self.name = name
         self.pattern = np.array(pattern if pattern is not None else [])
+        self.data, self.samplerate = load_sound(filename)
 
     def replace_pattern(self, new_pattern):
         # Replace whole pattern
@@ -25,9 +26,10 @@ class Track:
 
 
 class Sequence:
-    def __init__(self, bpm, steps_per_beat, tracks=None):
+    def __init__(self, bpm, steps_per_beat, engine: AudioEngine, tracks=None):
         self.bpm = bpm
         self.steps_per_beat = steps_per_beat
+        self.engine = engine
         self.tracks = tracks if tracks is not None else []
         self.playing = False
 
@@ -46,6 +48,11 @@ class Sequence:
         thread = threading.Thread(target=self.play_loop, daemon=True)
         thread.start()
 
+    def play_trigger(self, step):
+        for track in self.tracks:
+            if track.pattern[step] == 1:
+                self.engine.play(track.data)
+
     def play_loop(self):
         # Play from the beginning
         current_step = 0
@@ -54,9 +61,7 @@ class Sequence:
         while self.playing is True:
             now = clock.get_ticks()
             if now - last_step_time >= self.step_duration():
-                if self.tracks[0].pattern[current_step] == 1:
-                    audio.play(self.tracks[0].filename)
-
+                self.play_trigger(current_step)
                 current_step = (current_step + 1) % self.length()
                 last_step_time = now
 
