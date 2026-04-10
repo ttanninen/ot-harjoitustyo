@@ -37,6 +37,9 @@ class AudioEngine:
     def start(self):
         self.stream.start()
 
+    def stop(self):
+        self.stream.stop()
+
     def play(self, sample, volume=1.0, pan=0.0):
         self.sounds.append(Audio_file(sample, volume, pan))
 
