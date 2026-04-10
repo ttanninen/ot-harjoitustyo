@@ -20,6 +20,8 @@ track1.write_step(0)
 track1.write_step(4)
 track1.write_step(8)
 track1.write_step(12)
+track1.write_step(5)
+track1.write_step(7)
 
 # Initialize audioengine:
 engine = AudioEngine()
@@ -36,13 +38,15 @@ sequence.add_track(track1)
 while True:
     # Print instructions
     current_pattern_str = "Current pattern: " + str(sequence.tracks[0].pattern)
-    commands_str = "Test commands:\np play\ns stop\ne edit pattern\nx exit"
+    commands_str = "Test commands:\np play\nh pause\ns stop\ne edit pattern\nx exit"
     print(commands_str)
     print(current_pattern_str)
 
     command = input("Enter command: ")
     if command == "p":
         sequence.play()
+    elif command == "h":
+        sequence.pause()
     elif command == "s":
         sequence.stop()
     elif command == "e":

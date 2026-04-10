@@ -47,7 +47,14 @@ class Sequence:
         if self._playing: # If already playing, do nothing
             return
         
+        if self._paused: # If paused, resume
+            self._paused == False
+
+        else: # Play from the beginning
+            self._current_step = 0
+
         self._playing = True
+        
         # Run audio playback in separate thread
         self._thread = threading.Thread(target=self._play_loop, daemon=True)
         self._thread.start()
@@ -58,8 +65,6 @@ class Sequence:
                 self.engine.play(track.data)
 
     def _play_loop(self):
-        # Play from the beginning
-        self._current_step = 0
         last_step_time = self.step_duration()
 
         while self._playing:
@@ -72,12 +77,10 @@ class Sequence:
             clock.tick()
 
     def pause(self):
-        # Add here pause functionality:
-        # If playing, pause at current step/playhead state.
-        # Pressing pause again or play, continue from that step
-        # Pressing stop resets the playhead to beginning.
-        pass
-        
+        if self._playing:
+            self._playing = False
+            self._paused = True
+            
     def stop(self):
         self._playing = False
 
