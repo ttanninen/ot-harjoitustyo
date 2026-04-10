@@ -36,32 +36,32 @@ sequence.add_track(track1)
 while True:
     # Print instructions
     current_pattern_str = "Current pattern: " + str(sequence.tracks[0].pattern)
-    commands_str = "Test commands:\nP play\nS stop\nE edit pattern\nOther exit"
+    commands_str = "Test commands:\np play\ns stop\ne edit pattern\nx exit"
     print(commands_str)
     print(current_pattern_str)
 
     command = input("Enter command: ")
-    if command == "P":
+    if command == "p":
         sequence.play()
-    elif command == "S":
+    elif command == "s":
         sequence.stop()
-    elif command == "E":
+    elif command == "e":
         while True:
             print(current_pattern_str)
-            print("W write step\nD delete step\nOther cancel")
+            print("w write step\nd delete step\nOther cancel")
             edit_command = input("What do you wish to do? ")
-            if edit_command == "W":
+            if edit_command == "w":
                 step_number = input("Insert step number to write in range 1-16: ")
                 sequence.tracks[0].write_step(int(step_number) - 1)
                 print(current_pattern_str, commands_str)
                 break
-            elif edit_command == "D":
+            elif edit_command == "d":
                 step_number = input("Insert step number to delete from range 1-16: ")
                 sequence.tracks[0].erase_step(int(step_number) - 1)
                 print(current_pattern_str, commands_str)
                 break
             else:
                 break
-    else:
+    elif command == "x":
         sequence.engine.stop()
         break
