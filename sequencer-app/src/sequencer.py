@@ -75,6 +75,7 @@ class Sequence:
             
     def stop(self):
         self._playing = False
+        self._current_step = 0
 
 
     ### Internal loop controls
