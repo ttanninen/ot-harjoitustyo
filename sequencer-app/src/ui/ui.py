@@ -1,14 +1,7 @@
-import tkinter as tk
-from sequencer import Sequence, Track
-from audioengine import AudioEngine
-import clock
 import os
-
-dirname = os.path.dirname(__file__)
-kick = os.path.join(dirname, "samples", "bd01.wav")
-snare = os.path.join(dirname, "samples", "sd01.wav")
-hihat = os.path.join(dirname, "samples", "ch01.wav")
-
+import tkinter as tk
+from services.sequencer import Sequence, Track
+from services.audioengine import AudioEngine
 
 class UI:
     def __init__(self, root, sequence):
@@ -46,9 +39,16 @@ class UI:
         num_steps = self.sequence.length()
 
         for track_i, track in enumerate(self.sequence.tracks):
+            tk.Label(
+                self.grid_frame,
+                text=track.name,
+                width=10,
+                anchor="w",
+            ).grid(row=track_i, column=0, padx=(4, 8), pady=2)
+
             row_buttons = []
-            active = False
             for step_i in range(num_steps):
+                active = bool(track.pattern[step_i])
                 btn = tk.Button(self.grid_frame,
                                 width=3,
                                 relief=tk.SUNKEN if active else tk.RAISED,
@@ -79,31 +79,3 @@ class UI:
 
     def _stop(self):
         self.sequence.stop()
-
-
-if __name__ == "__main__":
-    clock.start()
-
-    engine = AudioEngine()
-    engine.start()
-
-    seq = Sequence(bpm=120, steps_per_beat=4, engine=engine)
-
-    # Add tracks — replace filenames with your own samples
-    kick_sample = Track(kick,  "Kick",  pattern=[
-                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-    snare_sample = Track(snare, "Snare", pattern=[
-                         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-    hihat_sample = Track(
-        hihat, "Hi-hat", pattern=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-
-    seq.add_track(kick_sample)
-    seq.add_track(snare_sample)
-    seq.add_track(hihat_sample)
-
-    root = tk.Tk()
-    app = UI(root, seq)
-    root.mainloop()
-
-    clock.stop()
-    engine.stop()
