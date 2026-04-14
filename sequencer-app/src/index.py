@@ -1,75 +1,45 @@
-import sequencer
 import os
-from audioengine import AudioEngine
-import clock
+import tkinter as tk
 
-# Clear terminal screen:
-os.system("cls" if os.name == "nt" else "clear")
+from ui.ui import UI
+from services.sequencer import Sequence, Track
+from services.audioengine import AudioEngine
 
-# Resolve program directory name
-dirname = os.path.dirname(__file__)
+def main():
 
-# Create new track
-test_sample = os.path.join(dirname, "samples", "bd01.wav")
-track1 = sequencer.Track(test_sample, "BD")
+    # Add initial sample files
 
-# Create 16-step pattern
-track1.set_length(16)
+    dirname = os.path.dirname(__file__)
 
-# Write some notes
-track1.write_step(0)
-track1.write_step(4)
-track1.write_step(8)
-track1.write_step(12)
-track1.write_step(5)
-track1.write_step(7)
+    kick = os.path.join(dirname, "samples", "bd01.wav")
+    snare = os.path.join(dirname, "samples", "sd01.wav")
+    hihat = os.path.join(dirname, "samples", "ch01.wav")
 
-# Initialize master clock:
-clock.start()
+    # Start audio engine
 
-# Initialize audioengine:
-engine = AudioEngine()
-engine.start()
+    engine = AudioEngine()
+    engine.start()
 
-# Create new sequence
-sequence = sequencer.Sequence(128, 4, engine)
+    # Initialize demo sequence
 
+    seq = Sequence(bpm=120, steps_per_beat=4, engine=engine)
 
-# Load track 1 to sequence
-sequence.add_track(track1)
+    kick_sample = Track(kick,  "Kick",  pattern=[
+                        1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0])
+    snare_sample = Track(snare, "Snare", pattern=[
+                        0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0])
+    hihat_sample = Track(hihat, "Hi-hat", pattern=[
+                        0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0])
 
-while True:
-    # Print instructions
-    current_pattern_str = "Current pattern: " + str(sequence.tracks[0].pattern)
-    commands_str = "Test commands:\np play\nh pause\ns stop\ne edit pattern\nx exit"
-    print(commands_str)
-    print(current_pattern_str)
+    seq.add_track(kick_sample)
+    seq.add_track(snare_sample)
+    seq.add_track(hihat_sample)
 
-    command = input("Enter command: ")
-    if command == "p":
-        sequence.play()
-    elif command == "h":
-        sequence.pause()
-    elif command == "s":
-        sequence.stop()
-    elif command == "e":
-        while True:
-            print(current_pattern_str)
-            print("w write step\nd delete step\nOther cancel")
-            edit_command = input("What do you wish to do? ")
-            if edit_command == "w":
-                step_number = input("Insert step number to write in range 1-16: ")
-                sequence.tracks[0].write_step(int(step_number) - 1)
-                print(current_pattern_str, commands_str)
-                break
-            elif edit_command == "d":
-                step_number = input("Insert step number to delete from range 1-16: ")
-                sequence.tracks[0].erase_step(int(step_number) - 1)
-                print(current_pattern_str, commands_str)
-                break
-            else:
-                break
-    elif command == "x":
-        sequence.engine.stop()
-        clock.stop()
-        break
+    # Initialize GUI and run main loop
+    root = tk.Tk()
+    app = UI(root, seq)
+    root.mainloop()
+    engine.stop()
+
+if __name__ == "__main__":
+    main()
