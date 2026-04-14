@@ -17,15 +17,15 @@ Sovelluksessa on graafinen käyttöliittymä, jota käytetään hiirellä. Sekve
 - Käyttäjä voi ladata .wav- muotoisia äänitiedostoja raidoille
   - Sovelluksessa on mukana tekijänoikeusvapaita äänitiedostoja ohjelman testaamiseksi
 - Käyttäjä voi säätää raidan äänenvoimakkuutta
-- Sekvenssin toiston voi käynnistää ja pysäyttää
+- Sekvenssin toiston voi käynnistää ja pysäyttää TEHTY
 - Sekvenssin voi tallentaa .wav muotoiseksi äänitiedostoksi
 - Sekvenssin askeleet voi tallentaa tietokantaan muistiin
 - Tallennetun sekvenssin askeleet voi ladata tietokannasta
 
 ## Toteutus
 
-- Käyttöliittymä: TKinter
-- Äänitiedostojen toisto: Pygame mixer tai pyaudio
+- Käyttöliittymä: TKinter TEHTY OSITTAIN
+- Äänitiedostojen toisto: Pygame mixer tai pyaudio TEHTY
 - Äänitiedostojen tallennus: pydub
 - Sekvenssin askeleiden tallennus: SQLite3
 
