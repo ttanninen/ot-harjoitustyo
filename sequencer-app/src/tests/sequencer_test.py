@@ -1,10 +1,13 @@
+import os
 import unittest
+
 from services.sequencer import Track, Sequence
 
+dirname = os.path.dirname(__file__)
 
 class testTrack(unittest.TestCase):
     def setUp(self):
-        filename = "testfile.wav"
+        filename = os.path.join(dirname, "testfile.wav")
         self.track = Track(filename, "test_name")
 
     def test_track_length_setting(self):
