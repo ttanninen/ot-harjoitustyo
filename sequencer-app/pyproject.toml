@@ -13,6 +13,9 @@ dependencies = [
     "miniaudio (>=1.61,<2.0)"
 ]
 
+[tool.poetry.scripts]
+start = "src.index:main"
+
 [tool.poetry]
 package-mode = false
 
