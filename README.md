@@ -21,3 +21,4 @@ Ominaisuuksia:
 - [Vaatimusmäärittely](/sequencer-app/dokumentaatio/vaatimusmaarittely.md)
 - [Tuntikirjanpito](/sequencer-app/dokumentaatio/tuntikirjanpito.md)
 - [Changelog](/sequencer-app/dokumentaatio/changelog.md)
+- [Arkkitehtuuri](/sequencer-app/dokumentaatio/arkkitehtuuri.md)
