@@ -1,7 +1,10 @@
 import numpy as np
 import threading
+import time
+
 import clock
 from audioengine import AudioEngine, load_sound
+
 
 class Track:
     def __init__(self, filename, name, pattern=None):
@@ -31,39 +34,41 @@ class Sequence:
         self.steps_per_beat = steps_per_beat
         self.engine = engine
         self.tracks = tracks if tracks is not None else []
-        
+
         self._playing = False
         self._paused = False
         self._current_step = 0
         self._thread = None
 
-    ### Track management
+    # Track management
 
     def add_track(self, Track):
         self.tracks.append(Track)
 
     def length(self):
+        if not self.tracks:
+            return 0
         return max([len(track.pattern) for track in self.tracks])
 
-    ### Track timing
+    # Track timing
 
     def step_duration(self):
-        return (60 / self.bpm) /self.steps_per_beat * 1000
+        return (60 / self.bpm) / self.steps_per_beat
 
-    ### Playback controls
+    # Playback controls
 
     def play(self):
-        if self._playing: # If already playing, do nothing
+        if self._playing:  # If already playing, do nothing
             return
-        
-        if self._paused: # If paused, resume
-            self._paused == False
 
-        else: # Play from the beginning
+        if self._paused:  # If paused, resume
+            self._paused = False
+
+        else:  # Play from the beginning
             self._current_step = 0
 
         self._playing = True
-        
+
         # Run audio playback in separate thread
         self._thread = threading.Thread(target=self._play_loop, daemon=True)
         self._thread.start()
@@ -72,29 +77,32 @@ class Sequence:
         if self._playing:
             self._playing = False
             self._paused = True
-            
+            if self._thread is not None:
+                self._thread.join()
+                self._thread = None
+
     def stop(self):
         self._playing = False
         self._current_step = 0
+        if self._thread is not None:
+            self._thread.join()
+            self._thread = None
 
+    # Internal loop controls
 
-    ### Internal loop controls
-
-    def _play_trigger(self, step):
+    def _trigger_step(self, step):
         for track in self.tracks:
-            if track.pattern[step] == 1:
+            if step < len(track.pattern) and track.pattern[step] == 1:
                 self.engine.play(track.data)
 
     def _play_loop(self):
-        last_step_time = self.step_duration()
+        next_step_time = time.perf_counter()
 
         while self._playing:
-            now = clock.get_ticks()
-            if now - last_step_time >= self.step_duration():
-                self._play_trigger(self._current_step)
-                self._current_step = (self._current_step + 1) % self.length()
-                last_step_time = now
+            self._trigger_step(self._current_step)
+            self._current_step = (self._current_step + 1) % self.length()
+            next_step_time += self.step_duration()
 
-            clock.tick()
-
-
+            sleep_for = next_step_time - time.perf_counter()
+            if sleep_for > 0:
+                time.sleep(sleep_for)
