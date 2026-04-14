@@ -1,14 +1,15 @@
 import unittest
-from sequencer import Track, Sequence
+from services.sequencer import Track, Sequence
+
 
 class testTrack(unittest.TestCase):
     def setUp(self):
         filename = "testfile.wav"
         self.track = Track(filename, "test_name")
-    
+
     def test_track_length_setting(self):
         self.track.set_length(16)
-        
+
         self.assertEqual(len(self.track.pattern), 16)
 
     def test_track_step_write(self):
