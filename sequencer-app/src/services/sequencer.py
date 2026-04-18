@@ -35,7 +35,8 @@ class Sequence:
         self.steps_per_beat = steps_per_beat
         self.engine = engine
         self.tracks = tracks if tracks is not None else []
-
+        self.on_step = None
+        
         self._playing = False
         self._paused = False
         self._current_step = 0
@@ -104,6 +105,8 @@ class Sequence:
                 self._playing = False
                 break
             self._trigger_step(self._current_step)
+            if self.on_step:
+                self.on_step(self._current_step)
             self._current_step = (self._current_step + 1) % self.length()
             next_step_time += self.step_duration()
 
