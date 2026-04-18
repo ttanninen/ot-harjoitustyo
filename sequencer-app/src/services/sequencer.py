@@ -41,8 +41,8 @@ class Sequence:
 
     # Track management
 
-    def add_track(self, Track):
-        self.tracks.append(Track)
+    def add_track(self, track: Track):
+        self.tracks.append(track)
 
     def length(self):
         if not self.tracks:
