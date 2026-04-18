@@ -1,12 +1,11 @@
 import os
 import tkinter as tk
-from services.sequencer import Sequence, Track
-from services.audioengine import AudioEngine
+from tkinter import filedialog as fd
 
 class UI:
-    def __init__(self, root, sequence):
+    def __init__(self, root, app):
         self.root = root
-        self.sequence = sequence
+        self.app = app
         self.root.title("Simple Sequencer")
         self.step_buttons = []
 
@@ -23,6 +22,8 @@ class UI:
                   command=self._pause).pack(side=tk.LEFT)
         tk.Button(toolbar, text="Stop", width=10,
                   command=self._stop).pack(side=tk.LEFT)
+        tk.Button(toolbar, text="Add track", width=20,
+                  command=self._add_track).pack(side=tk.RIGHT)
 
     def build_grid(self):
         self.grid_frame = tk.Frame(self.root)
@@ -36,9 +37,9 @@ class UI:
 
         self.step_buttons.clear()
 
-        num_steps = self.sequence.length()
+        num_steps = self.app.sequence.length()
 
-        for track_i, track in enumerate(self.sequence.tracks):
+        for track_i, track in enumerate(self.app.sequence.tracks):
             tk.Label(
                 self.grid_frame,
                 text=track.name,
@@ -62,7 +63,7 @@ class UI:
             self.step_buttons.append(row_buttons)
 
     def _toggle_step(self, track_i, step_i):
-        track = self.sequence.tracks[track_i]
+        track = self.app.sequence.tracks[track_i]
         btn = self.step_buttons[track_i][step_i]
         if track.pattern[step_i]:
             track.erase_step(step_i)
@@ -71,11 +72,37 @@ class UI:
             track.write_step(step_i)
             btn.config(relief=tk.SUNKEN, bg="#4caf50")
 
+    def _open_file(self):
+        filetypes = (
+            ("WAV files", "*.wav"),
+            )
+
+        filename = fd.askopenfilename(
+            title="Open a sample",
+            initialdir=os.path.dirname(__file__),
+            filetypes=filetypes
+        )
+        return filename
+    
+    def _add_track(self):
+        sample = self._open_file()
+
+        if not sample:
+            return
+        
+        sample_name = os.path.splitext(os.path.basename(sample))[0]
+
+        self.app.add_track(sample, sample_name)
+        self.rebuild_grid()
+
+
     def _play(self):
-        self.sequence.play()
+        self.app.sequence.play()
 
     def _pause(self):
-        self.sequence.pause()
+        self.app.sequence.pause()
 
     def _stop(self):
-        self.sequence.stop()
+        self.app.sequence.stop()
+
+

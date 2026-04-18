@@ -6,7 +6,7 @@ from services.audioengine import AudioEngine, load_sound
 
 
 class Track:
-    def __init__(self, filename, name, pattern=None):
+    def __init__(self, filename, name, pattern: list | None=None):
         self.filename = filename
         self.name = name
         self.pattern = np.array(pattern if pattern is not None else [])
