@@ -1,6 +1,7 @@
 import os
 import tkinter as tk
 from tkinter import filedialog as fd
+from tkinter import simpledialog
 
 class UI:
     def __init__(self, root, app):
@@ -19,15 +20,30 @@ class UI:
     def build_toolbar(self):
         toolbar = tk.Frame(self.root)
         toolbar.pack(side=tk.TOP, fill=tk.X)
-
+        
+        # Playback buttons
         tk.Button(toolbar, text="Play", width=10,
                   command=self._play).pack(side=tk.LEFT)
         tk.Button(toolbar, text="Pause", width=10,
                   command=self._pause).pack(side=tk.LEFT)
         tk.Button(toolbar, text="Stop", width=10,
                   command=self._stop).pack(side=tk.LEFT)
+        
+        # BPM input
+        tk.Label(toolbar, text="BPM").pack(side=tk.LEFT, padx=(12, 2))
+        self._bpm_var = tk.StringVar(value=str(int(self.app.sequence.bpm)))
+        bpm_entry = tk.Entry(toolbar, textvariable=self._bpm_var, width=5)
+        bpm_entry.pack(side=tk.LEFT)
+        bpm_entry.bind("<Return>", lambda e: self._set_bpm())
+        bpm_entry.bind("<FocusOut>", lambda e: self._set_bpm())
+        
+        # Sequence manipulation buttons
         tk.Button(toolbar, text="Add track", width=20,
                   command=self._add_track).pack(side=tk.RIGHT)
+        tk.Button(toolbar, text="Clear pattern", width=20,
+                  command=self._clear_pattern).pack(side=tk.RIGHT)
+        
+
 
     def build_indicators(self):
         self.indicator_canvas = tk.Canvas(self.root, height=20, bg=self.root.cget("bg"), highlightthickness=0)
@@ -64,7 +80,7 @@ class UI:
 
     def build_grid(self):
         self.grid_frame = tk.Frame(self.root)
-        self.grid_frame.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+        self.grid_frame.pack(side=tk.TOP, fill=tk.BOTH, expand=True, padx=(0, 8))
 
         self.rebuild_grid()
 
@@ -72,8 +88,13 @@ class UI:
         frame = tk.Frame(parent)
         frame.grid(row=track_i, column=0, padx=(4, 8), pady=2, sticky="w")
 
-        # Track name
-        tk.Label(frame, text=track.name, width=10, anchor="w").pack(side=tk.TOP, anchor="w")
+        # Track name and rename button
+        name_row = tk.Frame(frame)
+        name_row.pack(side=tk.TOP, anchor="w")
+        tk.Label(name_row, text=track.name, width=10, anchor="w").pack(side=tk.LEFT)
+        tk.Button(name_row, text="Rename", width=6,
+                  command=lambda t=track: self._rename_track(t)
+                  ).pack(side=tk.LEFT, padx=(0, 0))
 
         # Volume slider
         tk.Label(frame, text="Vol", anchor="w").pack(side=tk.LEFT)
@@ -95,6 +116,16 @@ class UI:
         pan_slider.set(track.pan)
         pan_slider.pack(side=tk.LEFT)
         
+        # Move track up button
+        tk.Button(frame, text="▲", width=2,
+        command=lambda t=track: self._move_track_up(t)
+        ).pack(side=tk.LEFT, padx=2)
+
+        # Move track down button
+        tk.Button(frame, text="▼", width=2,
+        command=lambda t=track: self._move_track_down(t)
+        ).pack(side=tk.LEFT, padx=2)
+
         # Remove track button
         tk.Button(
             frame, text="X", width=2, fg="red",
@@ -147,6 +178,16 @@ class UI:
             track.write_step(step_i)
             btn.config(relief=tk.SUNKEN, bg="#4caf50")
 
+    def _set_bpm(self):
+        try:
+            bpm = int(self._bpm_var.get())
+            if 20 <= bpm <= 300:
+                self.app.sequence.bpm = bpm
+            else:
+                self._bpm_var.set(str(int(self.app.sequence.bpm))) 
+        except ValueError:
+            self._bpm_var.set(str(int(self.app.sequence.bpm)))
+
 
     def _open_file(self):
         filetypes = (
@@ -171,9 +212,27 @@ class UI:
 
         self.app.add_track(sample, sample_name)
         self.rebuild_grid()
+    
+    def _rename_track(self, track):
+        new_name = simpledialog.askstring("Rename track", "Enter new name: ", initialvalue=track.name)
+        if new_name:
+            track.name = new_name
+        self.rebuild_grid()
+
+    def _move_track_up(self, track):
+        self.app.sequence.move_track_up(track)
+        self.rebuild_grid()
+    
+    def _move_track_down(self, track):
+        self.app.sequence.move_track_down(track)
+        self.rebuild_grid()
 
     def _remove_track(self, track):
         self.app.remove_track(track)
+        self.rebuild_grid()
+
+    def _clear_pattern(self):
+        self.app.sequence.clear_pattern()
         self.rebuild_grid()
 
     def _play(self):

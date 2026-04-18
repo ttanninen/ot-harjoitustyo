@@ -47,6 +47,17 @@ class Sequence:
     def add_track(self, track: Track):
         self.tracks.append(track)
 
+    def move_track_up(self, track):
+        i = self.tracks.index(track)
+        if i > 0:
+            self.tracks[i], self.tracks[i - 1] = self.tracks[i - 1], self.tracks[i]
+
+    def move_track_down(self, track):
+        i = self.tracks.index(track)
+        if i < len(self.tracks) - 1:
+            self.tracks[i], self.tracks[i + 1] = self.tracks[i + 1], self.tracks[i] 
+
+
     def length(self):
         if not self.tracks:
             return 0
@@ -89,6 +100,10 @@ class Sequence:
         if self._thread is not None:
             self._thread.join()
             self._thread = None
+
+    def clear_pattern(self):
+        for track in self.tracks:
+            track.set_length(len(track.pattern))
 
     # Internal loop controls
 
