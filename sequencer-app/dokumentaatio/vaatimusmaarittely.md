@@ -13,10 +13,10 @@ Sovelluksessa on graafinen käyttöliittymä, jota käytetään hiirellä. Sekve
 - Käyttäjä voi valita sekvenssin asetukset
   - Pituus (askelten määrä)
   - Nopeus (tempo)
-  - Raitojen määrä (eli sekvenssissä käytettävä äänitiedostojen määrä)
-- Käyttäjä voi ladata .wav- muotoisia äänitiedostoja raidoille
-  - Sovelluksessa on mukana tekijänoikeusvapaita äänitiedostoja ohjelman testaamiseksi
-- Käyttäjä voi säätää raidan äänenvoimakkuutta
+  - Raitojen määrä (eli sekvenssissä käytettävä äänitiedostojen määrä) TEHTY
+- Käyttäjä voi ladata .wav- muotoisia äänitiedostoja raidoille TEHTY
+  - Sovelluksessa on mukana tekijänoikeusvapaita äänitiedostoja ohjelman testaamiseksi TEHTY
+- Käyttäjä voi säätää raidan äänenvoimakkuutta TEHTY
 - Sekvenssin toiston voi käynnistää ja pysäyttää TEHTY
 - Sekvenssin voi tallentaa .wav muotoiseksi äänitiedostoksi
 - Sekvenssin askeleet voi tallentaa tietokantaan muistiin
