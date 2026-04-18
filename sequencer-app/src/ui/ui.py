@@ -64,6 +64,12 @@ class UI:
             command=lambda t=track: self._remove_track(t)
         ).pack(side=tk.LEFT, padx=2)
 
+    def _step_color(self, step_i, active):
+        if active:
+            return "#4caf50"
+        # Highlight different beats for easier pattern drawing
+        beat = (step_i // self.app.sequence.steps_per_beat) % 2
+        return "#A0A0A0" if beat == 0 else "#d8d8d8"
 
     def rebuild_grid(self):
         for button in self.grid_frame.winfo_children():
@@ -83,7 +89,7 @@ class UI:
                 btn = tk.Button(self.grid_frame,
                                 width=3,
                                 relief=tk.SUNKEN if active else tk.RAISED,
-                                bg="#4caf50" if active else "#d0d0d0",
+                                bg=self._step_color(step_i, active),
                                 command=lambda ti=track_i, si=step_i: self._toggle_step(
                                     ti, si),
                                 )
@@ -97,7 +103,7 @@ class UI:
         btn = self.step_buttons[track_i][step_i]
         if track.pattern[step_i]:
             track.erase_step(step_i)
-            btn.config(relief=tk.RAISED, bg="#d0d0d0")
+            btn.config(relief=tk.RAISED, bg=self._step_color(step_i, False))
         else:
             track.write_step(step_i)
             btn.config(relief=tk.SUNKEN, bg="#4caf50")
