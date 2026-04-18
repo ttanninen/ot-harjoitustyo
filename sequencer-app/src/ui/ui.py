@@ -107,10 +107,11 @@ class UI:
         filetypes = (
             ("WAV files", "*.wav"),
             )
+        initial_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "samples"))
 
         filename = fd.askopenfilename(
             title="Open a sample",
-            initialdir=os.path.dirname(__file__),
+            initialdir=initial_dir,
             filetypes=filetypes
         )
         return filename
