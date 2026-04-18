@@ -15,7 +15,8 @@ class App:
 
     def add_track(self, filename, name, pattern: list | None=None):
         track = Track(filename, name, pattern)
-        track.set_length(self.sequence.length() or 16)
+        if pattern is None:
+            track.set_length(self.sequence.length() or 16)
         self.sequence.add_track(track)
         return track
     

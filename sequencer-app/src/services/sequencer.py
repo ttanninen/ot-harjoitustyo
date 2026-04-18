@@ -10,6 +10,8 @@ class Track:
         self.filename = filename
         self.name = name
         self.pattern = np.array(pattern if pattern is not None else [])
+        self.volume = 1.0
+        self.pan = 0.0
         self.data, self.samplerate = load_sound(filename)
 
     def replace_pattern(self, new_pattern):
@@ -92,12 +94,15 @@ class Sequence:
     def _trigger_step(self, step):
         for track in self.tracks:
             if step < len(track.pattern) and track.pattern[step] == 1:
-                self.engine.play(track.data)
+                self.engine.play(track.data, volume=track.volume, pan=track.pan)
 
     def _play_loop(self):
         next_step_time = time.perf_counter()
 
         while self._playing:
+            if not self.tracks:
+                self._playing = False
+                break
             self._trigger_step(self._current_step)
             self._current_step = (self._current_step + 1) % self.length()
             next_step_time += self.step_duration()

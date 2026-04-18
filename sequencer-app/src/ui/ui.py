@@ -31,21 +31,51 @@ class UI:
 
         self.rebuild_grid()
 
+    def build_track_controls(self, parent, track_i, track):
+        frame = tk.Frame(parent)
+        frame.grid(row=track_i, column=0, padx=(4, 8), pady=2, sticky="w")
+
+        # Track name
+        tk.Label(frame, text=track.name, width=10, anchor="w").pack(side=tk.TOP, anchor="w")
+
+        # Volume slider
+        tk.Label(frame, text="Vol", anchor="w").pack(side=tk.LEFT)
+        vol_slider = tk.Scale(
+        frame, from_=0.0, to=1.0, resolution=0.01,
+        orient=tk.HORIZONTAL, length=80, showvalue=False,
+        command=lambda v, t=track: setattr(t, "volume", float(v))
+        )
+        vol_slider.set(track.volume)
+        vol_slider.pack(side=tk.LEFT)
+        
+        # Panning slider
+        tk.Label(frame, text="Pan", anchor="w").pack(side=tk.LEFT)
+        pan_slider = tk.Scale(
+        frame, from_=-1.0, to=1.0, resolution=0.01,
+        orient=tk.HORIZONTAL, length=80, showvalue=False,
+        command=lambda v, t=track: setattr(t, "pan", float(v))
+        )
+        pan_slider.set(track.pan)
+        pan_slider.pack(side=tk.LEFT)
+        
+        # Remove track button
+        tk.Button(
+            frame, text="X", width=2, fg="red",
+            command=lambda t=track: self._remove_track(t)
+        ).pack(side=tk.LEFT, padx=2)
+
+
     def rebuild_grid(self):
         for button in self.grid_frame.winfo_children():
             button.destroy()
 
         self.step_buttons.clear()
+        self.grid_frame.columnconfigure(0, minsize=120) # Reserve space for track controls
 
         num_steps = self.app.sequence.length()
 
         for track_i, track in enumerate(self.app.sequence.tracks):
-            tk.Label(
-                self.grid_frame,
-                text=track.name,
-                width=10,
-                anchor="w",
-            ).grid(row=track_i, column=0, padx=(4, 8), pady=2)
+            self.build_track_controls(self.grid_frame, track_i, track)
 
             row_buttons = []
             for step_i in range(num_steps):
@@ -72,6 +102,7 @@ class UI:
             track.write_step(step_i)
             btn.config(relief=tk.SUNKEN, bg="#4caf50")
 
+
     def _open_file(self):
         filetypes = (
             ("WAV files", "*.wav"),
@@ -95,6 +126,9 @@ class UI:
         self.app.add_track(sample, sample_name)
         self.rebuild_grid()
 
+    def _remove_track(self, track):
+        self.app.remove_track(track)
+        self.rebuild_grid()
 
     def _play(self):
         self.app.sequence.play()
