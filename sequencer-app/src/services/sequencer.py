@@ -4,8 +4,26 @@ import numpy as np
 
 from services.audioengine import AudioEngine, load_sound
 
+'''
+This module contains the sequencer logic:
+'''
+
+
+
+
 
 class Track:
+    '''
+    Track class contains the pattern sequence in numpy array of 
+    0's (=empty step) and 1's (=play sound at step). 
+    Track audio sample is stored in track.data in raw format.
+    Other parameters include the sample volume and panning.
+
+    Track methods include writing pattern, writing steps, 
+    erasing steps and creating a blank pattern of certain length.
+    '''
+
+
     def __init__(self, filename: str, name: str, pattern: list | None = None):
         self.filename = filename
         self.name = name
@@ -30,6 +48,19 @@ class Track:
 
 
 class Sequence:
+    '''
+    Sequence class contains the sequence settings: tempo and time division.
+    Audio engine contains the information where the audio files are sent to be played.
+    Sequence tracks are stored as a list which can be empty at the initialization.
+
+    Sequence contains three types of methods: 
+    - Track management
+    - Playback controls
+    - Internal loop and timing management
+
+    The internal playing loop is run in its own thread.
+    '''
+
     def __init__(self, bpm: int, steps_per_beat: int, engine: AudioEngine, tracks: list | None = None):
         self.bpm = bpm
         self.steps_per_beat = steps_per_beat
@@ -41,7 +72,11 @@ class Sequence:
         self._current_step = 0
         self._thread = None
 
-    # Track management
+    '''
+    *** Track management ***
+    '''
+
+    # Properties to be called from the UI:
     @property
     def is_playing(self):
         return self._playing
@@ -54,6 +89,7 @@ class Sequence:
     def current_step(self):
         return self._current_step
 
+    # Basic track functions:
     def add_track(self, track: Track):
         self.tracks.append(track)
 
@@ -72,14 +108,12 @@ class Sequence:
     def length(self):
         if not self.tracks:
             return 0
+        # In future versions, tracks may have variable lengths:
         return max([len(track.pattern) for track in self.tracks])
-
-    # Track timing
-
-    def step_duration(self):
-        return (60 / self.bpm) / self.steps_per_beat
-
-    # Playback controls
+    
+    '''
+    *** Playback controls ***
+    '''
 
     def play(self):
         if self._playing:  # If already playing, do nothing
@@ -93,7 +127,7 @@ class Sequence:
 
         self._playing = True
 
-        # Run audio playback in separate thread
+        # Run audio playback in separate thread!
         self._thread = threading.Thread(target=self._play_loop, daemon=True)
         self._thread.start()
 
@@ -116,9 +150,14 @@ class Sequence:
         for track in self.tracks:
             track.set_length(len(track.pattern))
 
-    # Internal loop controls
+    ''' 
+    *** Internal loop controls ***
+    '''
 
-    def _trigger_step(self, step):
+    def _step_duration(self):
+        return (60 / self.bpm) / self.steps_per_beat
+
+    def _trigger_step(self, step: int):
         for track in self.tracks:
             if step < len(track.pattern) and track.pattern[step] == 1:
                 self.engine.play(
@@ -132,9 +171,9 @@ class Sequence:
                 self._playing = False
                 break
             self._trigger_step(self._current_step)
-            self._current_step = (self._current_step + 1) % self.length()
-            next_step_time += self.step_duration()
-
+            self._current_step = (self._current_step + 1) % self.length() # Loop the steps
+            next_step_time += self._step_duration()
+            # Wait time to advance to next step
             sleep_for = next_step_time - time.perf_counter()
             if sleep_for > 0:
                 time.sleep(sleep_for)
