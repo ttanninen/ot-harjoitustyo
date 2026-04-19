@@ -3,9 +3,15 @@ import numpy as np
 
 import miniaudio
 
+'''
+Audioengine based on miniaudio.
+'''
 
-def load_sound(filename):
-    # Read waveform (numpy array) and samplerate from file
+def load_sound(filename: str):
+    '''
+    Read waveform (numpy array) and samplerate from file
+    '''
+
     decoded = miniaudio.decode_file(
         filename,
         output_format=miniaudio.SampleFormat.FLOAT32,
@@ -17,7 +23,7 @@ def load_sound(filename):
 
 
 class Audio_file:
-    def __init__(self, data, volume=1.0, pan=0.0):
+    def __init__(self, data: np.frombuffer, volume=1.0, pan=0.0):
         self.data = data
         self.position = 0  # Pointer to waveform playback position in the stream
         self.volume = volume
@@ -46,7 +52,7 @@ class AudioEngine:
     def stop(self):
         self._device.close()
 
-    def play(self, sample, volume=1.0, pan=0.0):
+    def play(self, sample: np.frombuffer, volume=1.0, pan=0.0):
         self._pending.put(Audio_file(sample, volume, pan))
 
     ### AI-generated code begins ###
