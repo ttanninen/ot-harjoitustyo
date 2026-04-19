@@ -19,6 +19,9 @@ class UI:
         self._poll_step()
 
     def build_toolbar(self):
+        '''
+        Toolbar for playback control and sequence management
+        '''
         toolbar = tk.Frame(self.root)
         toolbar.pack(side=tk.TOP, fill=tk.X)
 
@@ -43,6 +46,10 @@ class UI:
                   command=self._add_track).pack(side=tk.RIGHT)
         tk.Button(toolbar, text="Clear pattern", width=20,
                   command=self._clear_pattern).pack(side=tk.RIGHT)
+        
+    '''
+    Step sequencer playhead indicators
+    ''' 
 
     def build_indicators(self):
         self.indicator_canvas = tk.Canvas(
@@ -84,12 +91,71 @@ class UI:
             self._update_indicators(step)
         self.root.after(16, self._poll_step)
 
+    '''
+    Step sequencer grid
+    '''
+
     def build_grid(self):
         self.grid_frame = tk.Frame(self.root)
         self.grid_frame.pack(side=tk.TOP, fill=tk.BOTH,
                              expand=True, padx=(0, 8))
 
         self.rebuild_grid()
+
+    def _step_color(self, step_i, active):
+        if active:
+            return "#4caf50"
+        # Highlight different beats for easier pattern drawing
+        beat = (step_i // self.app.sequence.steps_per_beat) % 2
+        return "#A0A0A0" if beat == 0 else "#d8d8d8"
+
+    def rebuild_grid(self):
+        # Start from clean slate:
+        for button in self.grid_frame.winfo_children():
+            button.destroy()
+
+        self.step_buttons.clear()
+
+        # Reserve space for track controls
+        self.grid_frame.columnconfigure(0, minsize=120)
+
+        num_steps = self.app.sequence.length()
+
+        for track_i, track in enumerate(self.app.sequence.tracks):
+            # When the number of tracks is resolved, build track controls first:
+            self.build_track_controls(self.grid_frame, track_i, track)
+
+            # Read track patterns and draw the step sequencer grid accordingly
+            row_buttons = []
+            for step_i in range(num_steps):
+                active = bool(track.pattern[step_i]) # 0 = False, 1 = True
+                btn = tk.Button(self.grid_frame,
+                                width=3,
+                                relief=tk.SUNKEN if active else tk.RAISED,
+                                bg=self._step_color(step_i, active),
+                                command=lambda ti=track_i, si=step_i: self._toggle_step(
+                                    ti, si),
+                                )
+                btn.grid(row=track_i, column=step_i + 1)
+                row_buttons.append(btn)
+
+            self.step_buttons.append(row_buttons)
+        self.root.update_idletasks() # Force the grid to be finished before drawing indicators
+        self._draw_indicators()
+
+    def _toggle_step(self, track_i, step_i):
+        track = self.app.sequence.tracks[track_i]
+        btn = self.step_buttons[track_i][step_i]
+        if track.pattern[step_i]:
+            track.erase_step(step_i)
+            btn.config(relief=tk.RAISED, bg=self._step_color(step_i, False))
+        else:
+            track.write_step(step_i)
+            btn.config(relief=tk.SUNKEN, bg="#4caf50")
+
+    '''
+    Track control frame for each track
+    '''
 
     def build_track_controls(self, parent, track_i, track):
         frame = tk.Frame(parent)
@@ -140,52 +206,9 @@ class UI:
             command=lambda t=track: self._remove_track(t)
         ).pack(side=tk.LEFT, padx=2)
 
-    def _step_color(self, step_i, active):
-        if active:
-            return "#4caf50"
-        # Highlight different beats for easier pattern drawing
-        beat = (step_i // self.app.sequence.steps_per_beat) % 2
-        return "#A0A0A0" if beat == 0 else "#d8d8d8"
-
-    def rebuild_grid(self):
-        for button in self.grid_frame.winfo_children():
-            button.destroy()
-
-        self.step_buttons.clear()
-        # Reserve space for track controls
-        self.grid_frame.columnconfigure(0, minsize=120)
-
-        num_steps = self.app.sequence.length()
-
-        for track_i, track in enumerate(self.app.sequence.tracks):
-            self.build_track_controls(self.grid_frame, track_i, track)
-
-            row_buttons = []
-            for step_i in range(num_steps):
-                active = bool(track.pattern[step_i])
-                btn = tk.Button(self.grid_frame,
-                                width=3,
-                                relief=tk.SUNKEN if active else tk.RAISED,
-                                bg=self._step_color(step_i, active),
-                                command=lambda ti=track_i, si=step_i: self._toggle_step(
-                                    ti, si),
-                                )
-                btn.grid(row=track_i, column=step_i + 1)
-                row_buttons.append(btn)
-
-            self.step_buttons.append(row_buttons)
-        self.root.update_idletasks()
-        self._draw_indicators()
-
-    def _toggle_step(self, track_i, step_i):
-        track = self.app.sequence.tracks[track_i]
-        btn = self.step_buttons[track_i][step_i]
-        if track.pattern[step_i]:
-            track.erase_step(step_i)
-            btn.config(relief=tk.RAISED, bg=self._step_color(step_i, False))
-        else:
-            track.write_step(step_i)
-            btn.config(relief=tk.SUNKEN, bg="#4caf50")
+    '''
+    Event handlers
+    '''
 
     def _set_bpm(self):
         try:
@@ -238,7 +261,7 @@ class UI:
         self.rebuild_grid()
 
     def _remove_track(self, track):
-        self.app.remove_track(track)
+        self.app.sequence.remove_track(track)
         self.rebuild_grid()
 
     def _clear_pattern(self):
