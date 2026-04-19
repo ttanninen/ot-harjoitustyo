@@ -12,5 +12,5 @@
 | 14.4  | 5    | Hakemistojen organisointia, käyttöliittymän kehittelyä ja index.py:n päivitys GUI:lle. |
 | 18.4  | 1    | Coverage-report päivitys ja tutustuminen tkinterin file dialogiin. |
 | 18.4  | 5    | Ohjelmalogiikan jako app.py-moduuliin. Paljon uusia toimintoja käyttöliittymään. |
-| 19.4  | 2    | Unit-testien kirjoittaminen sequencer-moduulille. |
-| YHT.  | 30   | |
+| 19.4  | 4    | Unit-testien kirjoittaminen sequencer-moduulille ja koodikannan formatointi |
+| YHT.  | 32   | |
