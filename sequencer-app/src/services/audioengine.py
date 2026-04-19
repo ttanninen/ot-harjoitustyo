@@ -1,11 +1,6 @@
 import queue
 import numpy as np
-
 import miniaudio
-
-'''
-# Audioengine based on miniaudio.
-'''
 
 def load_sound(filename: str):
     '''

@@ -10,6 +10,7 @@ class UI:
         self.app = app
         self.root.title("Simple Sequencer")
         self.step_buttons = []
+        self.indicators = []
         self._current_light = -1
 
         self.build_toolbar()
@@ -46,16 +47,12 @@ class UI:
                   command=self._add_track).pack(side=tk.RIGHT)
         tk.Button(toolbar, text="Clear pattern", width=20,
                   command=self._clear_pattern).pack(side=tk.RIGHT)
-        
-    '''
-    Step sequencer playhead indicators
-    ''' 
 
+    # Sequencer playhead indicators
     def build_indicators(self):
         self.indicator_canvas = tk.Canvas(
             self.root, height=20, bg=self.root.cget("bg"), highlightthickness=0)
         self.indicator_canvas.pack(side=tk.TOP, fill=tk.X, padx=2)
-        self.indicators = []
         self.root.after(100, self._draw_indicators)
 
     def _draw_indicators(self):
@@ -91,10 +88,7 @@ class UI:
             self._update_indicators(step)
         self.root.after(16, self._poll_step)
 
-    '''
-    Step sequencer grid
-    '''
-
+    # Step sequncer grid
     def build_grid(self):
         self.grid_frame = tk.Frame(self.root)
         self.grid_frame.pack(side=tk.TOP, fill=tk.BOTH,
@@ -110,7 +104,7 @@ class UI:
         return "#A0A0A0" if beat == 0 else "#d8d8d8"
 
     def rebuild_grid(self):
-        # Start from clean slate:
+        # Start from clean slate
         for button in self.grid_frame.winfo_children():
             button.destroy()
 
@@ -122,7 +116,7 @@ class UI:
         num_steps = self.app.sequence.length()
 
         for track_i, track in enumerate(self.app.sequence.tracks):
-            # When the number of tracks is resolved, build track controls first:
+            # When the number of tracks is resolved, build track controls first
             self.build_track_controls(self.grid_frame, track_i, track)
 
             # Read track patterns and draw the step sequencer grid accordingly
@@ -153,10 +147,7 @@ class UI:
             track.write_step(step_i)
             btn.config(relief=tk.SUNKEN, bg="#4caf50")
 
-    '''
-    Track control frame for each track
-    '''
-
+    # Track controls
     def build_track_controls(self, parent, track_i, track):
         frame = tk.Frame(parent)
         frame.grid(row=track_i, column=0, padx=(4, 8), pady=2, sticky="w")
@@ -206,10 +197,7 @@ class UI:
             command=lambda t=track: self._remove_track(t)
         ).pack(side=tk.LEFT, padx=2)
 
-    '''
-    Event handlers
-    '''
-
+    # Event handlers
     def _set_bpm(self):
         try:
             bpm = int(self._bpm_var.get())

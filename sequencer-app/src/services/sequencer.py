@@ -4,10 +4,6 @@ import numpy as np
 
 from services.audioengine import AudioEngine, load_sound
 
-'''
-This module contains the sequencer logic:
-'''
-
 class Track:
     '''
     Track class contains the pattern sequence in numpy array of 
@@ -72,10 +68,6 @@ class Sequence:
         self._current_step = 0
         self._thread = None
 
-    '''
-    *** Track management ***
-    '''
-
     # Properties to be called from the UI:
     @property
     def is_playing(self):
@@ -114,10 +106,6 @@ class Sequence:
         # In future versions, tracks may have variable lengths:
         return max(len(track.pattern) for track in self.tracks)
 
-    '''
-    *** Playback controls ***
-    '''
-
     def play(self):
         if self._playing:  # If already playing, do nothing
             return
@@ -152,10 +140,6 @@ class Sequence:
     def clear_pattern(self):
         for track in self.tracks:
             track.set_length(len(track.pattern))
-
-    ''' 
-    *** Internal loop controls ***
-    '''
 
     def _step_duration(self):
         return (60 / self.bpm) / self.steps_per_beat

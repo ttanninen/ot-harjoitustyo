@@ -26,7 +26,7 @@ def main():
 
     # Start GUI
     root = tk.Tk()
-    ui = UI(root, app)
+    ui = UI(root, app) # pylint: disable=unused-variable
     root.mainloop()
     app.stop()
 
