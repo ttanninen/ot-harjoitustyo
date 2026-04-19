@@ -53,6 +53,12 @@ class testSequence(unittest.TestCase):
 
         self.assertEqual(self.sequence.tracks[0], self.track1)
 
+    def test_remove_track(self):
+        self.sequence.add_track(self.track1)
+        self.sequence.remove_track(self.track1)
+
+        self.assertEqual(self.sequence.tracks, [])
+
     def test_move_track_up(self):
         self.sequence.add_track(self.track1)
         self.sequence.add_track(self.track2)
@@ -96,7 +102,7 @@ class testSequence(unittest.TestCase):
         self.assertEqual(self.sequence.length(), 4)
 
     def test_step_duration(self):
-        self.assertEqual(self.sequence.step_duration(), 0.125)
+        self.assertEqual(self.sequence._step_duration(), 0.125)
 
     def test_play_when_stopped_and_not_paused(self):
         # Must have tracks to play:
