@@ -35,7 +35,6 @@ class Sequence:
         self.steps_per_beat = steps_per_beat
         self.engine = engine
         self.tracks = tracks if tracks is not None else []
-        self.on_step = None
         
         self._playing = False
         self._paused = False
@@ -43,6 +42,13 @@ class Sequence:
         self._thread = None
 
     # Track management
+    @property
+    def is_playing(self):
+        return self._playing
+    
+    @property
+    def current_step(self):
+        return self._current_step
 
     def add_track(self, track: Track):
         self.tracks.append(track)
@@ -120,8 +126,6 @@ class Sequence:
                 self._playing = False
                 break
             self._trigger_step(self._current_step)
-            if self.on_step:
-                self.on_step(self._current_step)
             self._current_step = (self._current_step + 1) % self.length()
             next_step_time += self.step_duration()
 

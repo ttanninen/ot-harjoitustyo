@@ -15,7 +15,7 @@ class UI:
         self.build_indicators()
         self.build_grid()
 
-        self.app.sequence.on_step = self._on_step
+        self._poll_step()
 
     def build_toolbar(self):
         toolbar = tk.Frame(self.root)
@@ -44,7 +44,6 @@ class UI:
                   command=self._clear_pattern).pack(side=tk.RIGHT)
         
 
-
     def build_indicators(self):
         self.indicator_canvas = tk.Canvas(self.root, height=20, bg=self.root.cget("bg"), highlightthickness=0)
         self.indicator_canvas.pack(side=tk.TOP, fill=tk.X, padx=2)
@@ -68,15 +67,18 @@ class UI:
             dot = self.indicator_canvas.create_oval(x-5, 5, x+5, 15, fill="#3a1a1a", outline="")
             self.indicators.append(dot)
 
-    def _on_step(self, step):
-        self._update_indicators(step)
-
     def _update_indicators(self, step):
         if 0 <= self._current_light < len(self.indicators):
             self.indicator_canvas.itemconfig(self.indicators[self._current_light], fill="#3a1a1a")
         if 0 <= step < len(self.indicators):
             self.indicator_canvas.itemconfig(self.indicators[step], fill="#ff3333")
         self._current_light = step
+
+    def _poll_step(self):
+        step = self.app.sequence.current_step
+        if self.app.sequence.is_playing:
+            self._update_indicators(step)
+        self.root.after(16, self._poll_step)
 
     def build_grid(self):
         self.grid_frame = tk.Frame(self.root)
