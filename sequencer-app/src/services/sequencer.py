@@ -6,7 +6,7 @@ from services.audioengine import AudioEngine, load_sound
 
 
 class Track:
-    def __init__(self, filename, name, pattern: list | None=None):
+    def __init__(self, filename: str, name: str, pattern: list | None = None):
         self.filename = filename
         self.name = name
         self.pattern = np.array(pattern if pattern is not None else [])
@@ -14,28 +14,28 @@ class Track:
         self.pan = 0.0
         self.data, self.samplerate = load_sound(filename)
 
-    def replace_pattern(self, new_pattern):
+    def replace_pattern(self, new_pattern: list):
         # Replace whole pattern
         self.pattern = np.array(new_pattern)
 
-    def write_step(self, step):
+    def write_step(self, step: int):
         self.pattern[step] = 1
 
-    def erase_step(self, step):
+    def erase_step(self, step: int):
         self.pattern[step] = 0
 
-    def set_length(self, number_of_steps):
+    def set_length(self, number_of_steps: int):
         # Create an empty pattern of length n
         self.pattern = np.array([0 for s in range(number_of_steps)])
 
 
 class Sequence:
-    def __init__(self, bpm, steps_per_beat, engine: AudioEngine, tracks=None):
+    def __init__(self, bpm: int, steps_per_beat: int, engine: AudioEngine, tracks: list | None = None):
         self.bpm = bpm
         self.steps_per_beat = steps_per_beat
         self.engine = engine
         self.tracks = tracks if tracks is not None else []
-        
+
         self._playing = False
         self._paused = False
         self._current_step = 0
@@ -47,22 +47,27 @@ class Sequence:
         return self._playing
     
     @property
+    def is_paused(self):
+        return self._paused
+
+    @property
     def current_step(self):
         return self._current_step
 
     def add_track(self, track: Track):
         self.tracks.append(track)
 
-    def move_track_up(self, track):
+    def move_track_up(self, track: Track):
         i = self.tracks.index(track)
         if i > 0:
-            self.tracks[i], self.tracks[i - 1] = self.tracks[i - 1], self.tracks[i]
+            self.tracks[i], self.tracks[i -
+                                        1] = self.tracks[i - 1], self.tracks[i]
 
-    def move_track_down(self, track):
+    def move_track_down(self, track: Track):
         i = self.tracks.index(track)
         if i < len(self.tracks) - 1:
-            self.tracks[i], self.tracks[i + 1] = self.tracks[i + 1], self.tracks[i] 
-
+            self.tracks[i], self.tracks[i +
+                                        1] = self.tracks[i + 1], self.tracks[i]
 
     def length(self):
         if not self.tracks:
@@ -116,7 +121,8 @@ class Sequence:
     def _trigger_step(self, step):
         for track in self.tracks:
             if step < len(track.pattern) and track.pattern[step] == 1:
-                self.engine.play(track.data, volume=track.volume, pan=track.pan)
+                self.engine.play(
+                    track.data, volume=track.volume, pan=track.pan)
 
     def _play_loop(self):
         next_step_time = time.perf_counter()

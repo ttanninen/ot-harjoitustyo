@@ -1,6 +1,7 @@
 from services.sequencer import Sequence, Track
 from services.audioengine import AudioEngine
 
+
 class App:
     def __init__(self):
         self.engine = AudioEngine()
@@ -13,17 +14,15 @@ class App:
         self.sequence.stop()
         self.engine.stop()
 
-    def add_track(self, filename, name, pattern: list | None=None):
+    def add_track(self, filename, name, pattern: list | None = None):
         track = Track(filename, name, pattern)
         if pattern is None:
             track.set_length(self.sequence.length() or 16)
         self.sequence.add_track(track)
         return track
-    
+
     def remove_track(self, track):
         self.sequence.tracks.remove(track)
 
     def set_bpm(self, bpm):
         self.sequence.bpm = bpm
-
-    
