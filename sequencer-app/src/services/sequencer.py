@@ -93,6 +93,9 @@ class Sequence:
     def add_track(self, track: Track):
         self.tracks.append(track)
 
+    def remove_track(self, track: Track):
+        self.tracks.remove(track)
+
     def move_track_up(self, track: Track):
         i = self.tracks.index(track)
         if i > 0:
