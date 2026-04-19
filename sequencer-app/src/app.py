@@ -4,7 +4,8 @@ from services.audioengine import AudioEngine
 
 class App:
     '''
-    This is the context manager of the application. It hosts the instances of audio engine and main sequence
+    This is the context manager of the application. 
+    It hosts the instances of audio engine and main sequence.
     '''
 
     def __init__(self):
