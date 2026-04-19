@@ -10,6 +10,7 @@
 | 10.4  | 4    | Pygame mixerin vaihto Sounddeviceen ja kellon vaihto pythonin omaan kelloon. |
 | 13.4  | 4    | Sounddevicen vaihto miniaudioon ja taistelua latenssien kanssa. |
 | 14.4  | 5    | Hakemistojen organisointia, käyttöliittymän kehittelyä ja index.py:n päivitys GUI:lle. |
-| 18.4  | 1    | Coverage-report päivitys ja tutustuminen tkinterin file dialogiin |
-| 18.4  | 5    | Ohjelmalogiikan jako app.py-moduuliin. Paljon uusia toimintoja käyttöliittymään |
-| YHT.  | 28   | |
+| 18.4  | 1    | Coverage-report päivitys ja tutustuminen tkinterin file dialogiin. |
+| 18.4  | 5    | Ohjelmalogiikan jako app.py-moduuliin. Paljon uusia toimintoja käyttöliittymään. |
+| 19.4  | 2    | Unit-testien kirjoittaminen sequencer-moduulille. |
+| YHT.  | 30   | |
