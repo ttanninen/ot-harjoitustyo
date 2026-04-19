@@ -8,10 +8,6 @@ from services.audioengine import AudioEngine, load_sound
 This module contains the sequencer logic:
 '''
 
-
-
-
-
 class Track:
     '''
     Track class contains the pattern sequence in numpy array of 
@@ -61,7 +57,11 @@ class Sequence:
     The internal playing loop is run in its own thread.
     '''
 
-    def __init__(self, bpm: int, steps_per_beat: int, engine: AudioEngine, tracks: list | None = None):
+    def __init__(self,
+                 bpm: int,
+                 steps_per_beat: int,
+                 engine: AudioEngine,
+                 tracks: list | None = None):
         self.bpm = bpm
         self.steps_per_beat = steps_per_beat
         self.engine = engine
@@ -80,7 +80,7 @@ class Sequence:
     @property
     def is_playing(self):
         return self._playing
-    
+
     @property
     def is_paused(self):
         return self._paused
@@ -112,8 +112,8 @@ class Sequence:
         if not self.tracks:
             return 0
         # In future versions, tracks may have variable lengths:
-        return max([len(track.pattern) for track in self.tracks])
-    
+        return max(len(track.pattern) for track in self.tracks)
+
     '''
     *** Playback controls ***
     '''
