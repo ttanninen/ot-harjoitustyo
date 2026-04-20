@@ -41,49 +41,51 @@ class testTrack(unittest.TestCase):
 
 class testSequence(unittest.TestCase):
     def setUp(self):
-        filename = os.path.join(dirname, "testfile.wav")
-        self.track1 = Track(filename, "test_name1")
-        self.track2 = Track(filename, "test_name2")
+        self.filename = os.path.join(dirname, "testfile.wav")
+        self.track1 = "test_name1"
+        self.track2 = "test_name2"
         self.engine = AudioEngine()
         self.sequence = Sequence(bpm=120, steps_per_beat=4, engine=self.engine)
 
 
     def test_add_track(self):
-        self.sequence.add_track(self.track1)
+        self.filename = os.path.join(dirname, "testfile.wav")
+        self.sequence.add_track(self.filename, self.track1)
 
-        self.assertEqual(self.sequence.tracks[0], self.track1)
+        self.assertEqual(self.sequence.tracks[0].name, "test_name1")
 
     def test_remove_track(self):
-        self.sequence.add_track(self.track1)
-        self.sequence.remove_track(self.track1)
+        track = Track(self.filename, "test_name")
+        self.sequence.tracks.append(track)
+        self.sequence.remove_track(track)
 
         self.assertEqual(self.sequence.tracks, [])
 
     def test_move_track_up(self):
-        self.sequence.add_track(self.track1)
-        self.sequence.add_track(self.track2)
-        self.sequence.move_track_up(self.track2)
+        self.sequence.add_track(self.filename, self.track1)
+        self.sequence.add_track(self.filename, self.track2)
+        self.sequence.move_track_up(self.sequence.tracks[1])
 
         self.assertEqual(self.sequence.tracks[0].name, "test_name2")
 
     def test_move_first_track_up(self):
-        self.sequence.add_track(self.track1)
-        self.sequence.add_track(self.track2)
-        self.sequence.move_track_up(self.track1)
+        self.sequence.add_track(self.filename, self.track1)
+        self.sequence.add_track(self.filename, self.track2)
+        self.sequence.move_track_up(self.sequence.tracks[0])
 
         self.assertEqual(self.sequence.tracks[0].name, "test_name1")
 
     def test_move_track_down(self):
-        self.sequence.add_track(self.track1)
-        self.sequence.add_track(self.track2)
-        self.sequence.move_track_down(self.track1)
+        self.sequence.add_track(self.filename, self.track1)
+        self.sequence.add_track(self.filename, self.track2)
+        self.sequence.move_track_down(self.sequence.tracks[0])
 
         self.assertEqual(self.sequence.tracks[1].name, "test_name1")
 
     def test_move_last_track_down(self):
-        self.sequence.add_track(self.track1)
-        self.sequence.add_track(self.track2)
-        self.sequence.move_track_down(self.track2)
+        self.sequence.add_track(self.filename, self.track1)
+        self.sequence.add_track(self.filename, self.track2)
+        self.sequence.move_track_down(self.sequence.tracks[1])
 
         self.assertEqual(self.sequence.tracks[1].name, "test_name2")
 
@@ -91,14 +93,14 @@ class testSequence(unittest.TestCase):
         self.assertEqual(self.sequence.length(), 0)
 
     def test_sequence_length_with_empty_track(self):
-        self.sequence.add_track(self.track1)
+        self.sequence.add_track(self.filename, self.track1)
+        self.sequence.tracks[0].set_length(0)
 
         self.assertEqual(self.sequence.length(), 0)
 
     def test_sequence_length_with_filled_track(self):
-        self.track1.replace_pattern([1, 0, 0, 0])
-        self.sequence.add_track(self.track1)
-
+        self.sequence.add_track(self.filename, self.track1)
+        self.sequence.tracks[0].replace_pattern([1,0,0,0])
         self.assertEqual(self.sequence.length(), 4)
 
     def test_step_duration(self):
@@ -106,9 +108,8 @@ class testSequence(unittest.TestCase):
 
     def test_play_when_stopped_and_not_paused(self):
         # Must have tracks to play:
-        self.track1.replace_pattern([1, 0, 0, 0])
-        self.sequence.add_track(self.track1)
-
+        self.sequence.add_track(self.filename, self.track1)
+        self.sequence.tracks[0].replace_pattern([1,0,0,0])
         self.sequence._playing = False
         self.sequence._paused = False
 
@@ -117,9 +118,8 @@ class testSequence(unittest.TestCase):
 
     def test_play_when_playing_and_not_paused(self):
         # Must have tracks to play:
-        self.track1.replace_pattern([1, 0, 0, 0])
-        self.sequence.add_track(self.track1)
-
+        self.sequence.add_track(self.filename, self.track1)
+        self.sequence.tracks[0].replace_pattern([1,0,0,0])
         self.sequence._playing = True
         self.sequence._paused = False
 
@@ -128,9 +128,8 @@ class testSequence(unittest.TestCase):
 
     def test_play_when_paused(self):
         # Must have tracks to play:
-        self.track1.replace_pattern([1, 0, 0, 0])
-        self.sequence.add_track(self.track1)
-
+        self.sequence.add_track(self.filename, self.track1)
+        self.sequence.tracks[0].replace_pattern([1,0,0,0])
         self.sequence._playing = False
         self.sequence._paused = True
 
@@ -138,24 +137,21 @@ class testSequence(unittest.TestCase):
         self.assertEqual(self.sequence.is_playing, True)
 
     def test_play_from_start(self):
-        self.track1.replace_pattern([1, 0, 0, 0])
-        self.sequence.add_track(self.track1)
-
+        self.sequence.add_track(self.filename, self.track1)
+        self.sequence.tracks[0].replace_pattern([1,0,0,0])
         self.sequence.play()
         self.assertEqual(self.sequence.current_step, 1)
 
     def test_play_threading(self):
-        self.track1.replace_pattern([1, 0, 0, 0])
-        self.sequence.add_track(self.track1)
+        self.sequence.add_track(self.filename, self.track1)
+        self.sequence.tracks[0].replace_pattern([1,0,0,0])
         self.sequence.play()
 
         self.assertIsNotNone(self.sequence._thread, True)
 
     def test_pause_when_not_playing(self):
-        # Must have tracks to play:
-        self.track1.replace_pattern([1, 0, 0, 0])
-        self.sequence.add_track(self.track1)
-
+        self.sequence.add_track(self.filename, self.track1)
+        self.sequence.tracks[0].replace_pattern([1,0,0,0])
         self.sequence._playing = False
         self.sequence._paused = False
 
@@ -163,9 +159,8 @@ class testSequence(unittest.TestCase):
         self.assertEqual(self.sequence.is_paused, False)
 
     def test_pause_when_playing(self):
-        self.track1.replace_pattern([1, 0, 0, 0])
-        self.sequence.add_track(self.track1)
-
+        self.sequence.add_track(self.filename, self.track1)
+        self.sequence.tracks[0].replace_pattern([1,0,0,0])
         self.sequence._playing = True
         self.sequence._paused = False
 
@@ -173,45 +168,40 @@ class testSequence(unittest.TestCase):
         self.assertEqual(self.sequence.is_paused, True)
 
     def test_pause_threading_join(self):
-        self.track1.replace_pattern([1, 0, 0, 0])
-        self.sequence.add_track(self.track1)
+        self.sequence.add_track(self.filename, self.track1)
+        self.sequence.tracks[0].replace_pattern([1,0,0,0])
         self.sequence.play()
         self.sequence.pause()
 
         self.assertIsNone(self.sequence._thread, True)
 
     def test_stop_when_playing(self):
-        # Must have tracks to play:
-        self.track1.replace_pattern([1, 0, 0, 0])
-        self.sequence.add_track(self.track1)
-
+        self.sequence.add_track(self.filename, self.track1)
+        self.sequence.tracks[0].replace_pattern([1,0,0,0])
         self.sequence._playing = True
         self.sequence.stop()
 
         self.assertEqual(self.sequence._playing, False)
 
     def test_stop_return_to_first_step(self):
-        # Must have tracks to play:
-        self.track1.replace_pattern([1, 0, 0, 0])
-        self.sequence.add_track(self.track1)
-
+        self.sequence.add_track(self.filename, self.track1)
+        self.sequence.tracks[0].replace_pattern([1,0,0,0])
         self.sequence._playing = True
         self.sequence.stop()
 
         self.assertEqual(self.sequence._current_step, 0)
 
     def test_stop_threading_join(self):
-        self.track1.replace_pattern([1, 0, 0, 0])
-        self.sequence.add_track(self.track1)
+        self.sequence.add_track(self.filename, self.track1)
+        self.sequence.tracks[0].replace_pattern([1,0,0,0])
         self.sequence.play()
         self.sequence.stop()
 
         self.assertIsNone(self.sequence._thread, False)
 
     def test_clear_pattern(self):
-        self.track1.replace_pattern([1, 0, 0, 0])
-        self.sequence.add_track(self.track1)
-
+        self.sequence.add_track(self.filename, self.track1)
+        self.sequence.tracks[0].replace_pattern([1,0,0,0])
         self.sequence.clear_pattern()
 
         self.assertEqual(
