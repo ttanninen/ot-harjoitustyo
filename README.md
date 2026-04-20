@@ -43,7 +43,7 @@ poetry run invoke lint
 ```
 
 ## Releases
-- [Viikko 5](/releases/tag/viikko5)
+- [Viikko 5](https://github.com/ttanninen/ot-harjoitustyo/releases/tag/viikko5)
 
 ## Dokumentaatio
 
