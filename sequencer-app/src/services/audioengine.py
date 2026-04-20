@@ -47,8 +47,8 @@ class AudioEngine:
     def stop(self):
         self._device.close()
 
-    def play(self, sample: np.frombuffer, volume=1.0, pan=0.0):
-        self._pending.put(AudioFile(sample, volume, pan))
+    def play(self, audio_data: np.frombuffer, volume=1.0, pan=0.0):
+        self._pending.put(AudioFile(audio_data, volume, pan))
 
     ### AI-generated code begins ###
 
