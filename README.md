@@ -42,7 +42,8 @@ Pylint tarkastus:
 poetry run invoke lint
 ```
 
-## Release
+## Releases
+- [Viikko 5](/releases/tag/viikko5)
 
 ## Dokumentaatio
 
