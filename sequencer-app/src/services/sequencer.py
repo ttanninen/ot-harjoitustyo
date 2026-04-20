@@ -82,7 +82,10 @@ class Sequence:
         return self._current_step
 
     # Basic track functions:
-    def add_track(self, track: Track):
+    def add_track(self, filename, name, pattern: list | None = None):
+        track = Track(filename, name, pattern)
+        if pattern is None:
+            track.set_length(self.length() or 16)
         self.tracks.append(track)
 
     def remove_track(self, track: Track):

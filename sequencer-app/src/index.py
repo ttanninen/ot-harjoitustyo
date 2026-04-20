@@ -17,11 +17,11 @@ def main():
     snare = os.path.join(dirname, "samples", "sd01.wav")
     hihat = os.path.join(dirname, "samples", "ch01.wav")
 
-    app.add_track(kick,  "Kick",  pattern=[
+    app.sequence.add_track(kick,  "Kick",  pattern=[
         1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0])
-    app.add_track(snare, "Snare", pattern=[
+    app.sequence.add_track(snare, "Snare", pattern=[
         0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0])
-    app.add_track(hihat, "Hi-hat", pattern=[
+    app.sequence.add_track(hihat, "Hi-hat", pattern=[
         0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0])
 
     # Start GUI

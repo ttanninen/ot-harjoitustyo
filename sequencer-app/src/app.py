@@ -18,11 +18,3 @@ class App:
     def stop(self):
         self.sequence.stop()
         self.engine.stop()
-
-    # Controls for adding initial pattern
-    def add_track(self, filename, name, pattern: list | None = None):
-        track = Track(filename, name, pattern)
-        if pattern is None:
-            track.set_length(self.sequence.length() or 16)
-        self.sequence.add_track(track)
-        return track

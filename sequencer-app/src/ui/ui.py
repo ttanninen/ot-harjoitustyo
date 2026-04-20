@@ -223,14 +223,14 @@ class UI:
         return filename
 
     def _add_track(self):
-        sample = self._open_file()
+        audio_file = self._open_file()
 
-        if not sample:
+        if not audio_file:
             return
 
-        sample_name = os.path.splitext(os.path.basename(sample))[0]
+        filename = os.path.splitext(os.path.basename(audio_file))[0]
 
-        self.app.add_track(sample, sample_name)
+        self.app.sequence.add_track(audio_file, filename)
         self.rebuild_grid()
 
     def _rename_track(self, track):
