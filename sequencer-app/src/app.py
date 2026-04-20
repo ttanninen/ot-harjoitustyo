@@ -1,4 +1,4 @@
-from services.sequencer import Sequence, Track
+from services.sequencer import Sequence
 from services.audioengine import AudioEngine
 
 
