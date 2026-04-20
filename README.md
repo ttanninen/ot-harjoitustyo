@@ -16,7 +16,14 @@ Ominaisuuksia:
 
 ## Asennus ja käynnistys
 
-Asenna aluksi ohjelman vaatimat riippuvuudet:
+Ohjelma sijaitsee kansiossa ```/sequencer-app/```, jossa kaikki mainitut komennot tulee suorittaa.
+
+Siirry aluksi sequencer-app kansioon:
+```bash
+cd sequencer-app/
+```
+
+Asenna ohjelman vaatimat riippuvuudet:
 ```bash
 poetry install
 ```
