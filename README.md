@@ -27,7 +27,7 @@ poetry run invoke start
 ```
 
 ## Sovelluksen testauksen komentorivikomennot
-Unit-testaus:
+Yksikkötestaus:
 ```bash
 poetry run invoke test
 ```
@@ -35,6 +35,11 @@ poetry run invoke test
 Testikattavuusraportin luominen ```sequencer-app/htmlcov/``` -kansioon:
 ```bash
 poetry run invoke coverage-report
+```
+
+Pylint tarkastus:
+```bash
+poetry run invoke lint
 ```
 
 ## Release
