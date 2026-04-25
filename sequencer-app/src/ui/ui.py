@@ -50,6 +50,14 @@ class UI:
         steps_entry.bind("<Return>", lambda e: self._set_steps())
         steps_entry.bind("<FocusOut>", lambda e: self._set_steps())
 
+        # Sequence steps per beat
+        tk.Label(toolbar, text="Steps per beat").pack(side=tk.LEFT, padx=(12,2))
+        self._steps_per_beat_var = tk.StringVar(value=str(self.app.sequence.steps_per_beat))
+        steps_per_beat_entry = tk.Entry(toolbar, textvariable=self._steps_per_beat_var, width=5)
+        steps_per_beat_entry.pack(side=tk.LEFT)
+        steps_per_beat_entry.bind("<Return>", lambda e: self._set_steps_per_beat())
+        steps_per_beat_entry.bind("<FocusOut>", lambda e: self._set_steps_per_beat())
+
         # Sequence manipulation buttons
         tk.Button(toolbar, text="Add track", width=20,
                   command=self._add_track).pack(side=tk.RIGHT)
@@ -227,6 +235,18 @@ class UI:
         
         except ValueError:
             self._steps_var.set(str(self.app.sequence.num_steps))
+
+    def _set_steps_per_beat(self):
+        try:
+            steps_per_beat = int(self._steps_per_beat_var.get())
+            if 1 <= steps_per_beat <= 16:
+                self.app.sequence.steps_per_beat = steps_per_beat
+                self.rebuild_grid()
+            else:
+                self._steps_per_beat_var.set(str(self.app.sequence.steps_per_beat))
+            
+        except ValueError:
+            self._steps_per_beat_var.set(str(self.app.sequence.steps_per_beat))
 
     def _open_file(self):
         filetypes = (
