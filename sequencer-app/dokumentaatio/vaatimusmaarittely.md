@@ -11,8 +11,8 @@ Sovelluksessa on graafinen käyttöliittymä, jota käytetään hiirellä. Sekve
 ## Toiminnallisuus
 
 - Käyttäjä voi valita sekvenssin asetukset
-  - Pituus (askelten määrä)
-  - Nopeus (tempo)
+  - Pituus (askelten määrä) TEHTY
+  - Nopeus (tempo)TEHTY
   - Raitojen määrä (eli sekvenssissä käytettävä äänitiedostojen määrä) TEHTY
 - Käyttäjä voi ladata .wav- muotoisia äänitiedostoja raidoille TEHTY
   - Sovelluksessa on mukana tekijänoikeusvapaita äänitiedostoja ohjelman testaamiseksi TEHTY
