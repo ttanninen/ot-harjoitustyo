@@ -219,7 +219,7 @@ class UI:
     def _set_steps(self):
         try:
             steps = int(self._steps_var.get())
-            if 1 <= steps <= 64:
+            if 1 <= steps <= 32:
                 self.app.sequence.set_length(steps)
                 self.rebuild_grid()
             else:
