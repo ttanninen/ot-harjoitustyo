@@ -12,3 +12,6 @@
 - Graafiseen käyttöliittymään lisättiin tahtilajin mukaan määräytyvä värisävytys helpottamaan askelten piirtämistä sekä askeleen ilmaisin.
 - Sovelluslogiikkaa muutettiin siten että index.py kutsuu app.py:tä joka luo tarvittavat oliot sekvensserille ja äänimoottorille, ja jota UI kutsuu.
 
+## Viikko 6
+- Sekvenssin pituutta ja tahtilajia voi muokata käyttöliittymän työkalupalkissa.
+

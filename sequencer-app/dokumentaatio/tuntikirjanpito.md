@@ -14,4 +14,5 @@
 | 18.4  | 5    | Ohjelmalogiikan jako app.py-moduuliin. Paljon uusia toimintoja käyttöliittymään. |
 | 19.4  | 4    | Unit-testien kirjoittaminen sequencer-moduulille ja koodikannan formatointi. |
 | 20.4  | 2    | Sovelluslogiikan siistiminen. | 
-| YHT.  | 34   | |
+| 25.4  | 2    | Sekvenssin pituuden ja tahtilajin muokkaaminen |
+| YHT.  | 36   | |
