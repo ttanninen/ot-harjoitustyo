@@ -54,13 +54,16 @@ class Sequence:
     '''
 
     def __init__(self,
-                 bpm: int,
-                 steps_per_beat: int,
                  engine: AudioEngine,
-                 tracks: list | None = None):
+                 bpm: int,
+                 steps_per_beat: int = 4,
+                 num_steps: int = 16,
+                 tracks: list | None = None,
+                 ):
+        self.engine = engine
         self.bpm = bpm
         self.steps_per_beat = steps_per_beat
-        self.engine = engine
+        self.num_steps = num_steps
         self.tracks = tracks if tracks is not None else []
 
         self._playing = False
@@ -85,9 +88,22 @@ class Sequence:
     def add_track(self, filename, name, pattern: list | None = None):
         track = Track(filename, name, pattern)
         if pattern is None:
-            track.set_length(self.length() or 16)
+            track.set_length(self.num_steps)
         self.tracks.append(track)
+    
+    def set_length(self, num_steps: int):
+        for track in self.tracks:
+            current_length = len(track.pattern)
+            if num_steps <= current_length:
+                track.pattern = track.pattern[:num_steps]
+            else:
+                new_steps = np.array([0 for s in range(num_steps - current_length)])
+                track.pattern = np.concatenate([track.pattern, new_steps])
+        self.num_steps = num_steps
 
+        if self._current_step >= self.num_steps:
+            self._current_step = 0
+ 
     def remove_track(self, track: Track):
         self.tracks.remove(track)
 
@@ -104,10 +120,7 @@ class Sequence:
                                         1] = self.tracks[i + 1], self.tracks[i]
 
     def length(self):
-        if not self.tracks:
-            return 0
-        # In future versions, tracks may have variable lengths:
-        return max(len(track.pattern) for track in self.tracks)
+        return self.num_steps
 
     def play(self):
         if self._playing:  # If already playing, do nothing
@@ -142,7 +155,7 @@ class Sequence:
 
     def clear_pattern(self):
         for track in self.tracks:
-            track.set_length(len(track.pattern))
+            track.set_length(self.num_steps)
 
     def _step_duration(self):
         return (60 / self.bpm) / self.steps_per_beat

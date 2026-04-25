@@ -42,6 +42,14 @@ class UI:
         bpm_entry.bind("<Return>", lambda e: self._set_bpm())
         bpm_entry.bind("<FocusOut>", lambda e: self._set_bpm())
 
+        # Sequence length input
+        tk.Label(toolbar, text="Steps").pack(side=tk.LEFT, padx=(12,2))
+        self._steps_var = tk.StringVar(value=str(self.app.sequence.num_steps))
+        steps_entry = tk.Entry(toolbar, textvariable=self._steps_var, width=5)
+        steps_entry.pack(side=tk.LEFT)
+        steps_entry.bind("<Return>", lambda e: self._set_steps())
+        steps_entry.bind("<FocusOut>", lambda e: self._set_steps())
+
         # Sequence manipulation buttons
         tk.Button(toolbar, text="Add track", width=20,
                   command=self._add_track).pack(side=tk.RIGHT)
@@ -207,6 +215,18 @@ class UI:
                 self._bpm_var.set(str(int(self.app.sequence.bpm)))
         except ValueError:
             self._bpm_var.set(str(int(self.app.sequence.bpm)))
+
+    def _set_steps(self):
+        try:
+            steps = int(self._steps_var.get())
+            if 1 <= steps <= 64:
+                self.app.sequence.set_length(steps)
+                self.rebuild_grid()
+            else:
+                self._steps_var.set(str(self.app.sequence.num_steps))
+        
+        except ValueError:
+            self._steps_var.set(str(self.app.sequence.num_steps))
 
     def _open_file(self):
         filetypes = (
