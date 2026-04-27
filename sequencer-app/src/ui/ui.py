@@ -14,6 +14,8 @@ class UI:
         self.indicators = []
         self._current_light = -1
 
+        self.root.bind("<space>", lambda e: self._toggle_play())
+
         self.build_toolbar()
         self.build_indicators()
         self.build_grid()
@@ -309,3 +311,10 @@ class UI:
     def _stop(self):
         self.app.sequence.stop()
         self._update_indicators(-1)
+
+    def _toggle_play(self):
+        if self.app.sequence.is_playing:
+            self.app.sequence.stop()
+            self._update_indicators(-1)
+        else:
+            self.app.sequence.play()
