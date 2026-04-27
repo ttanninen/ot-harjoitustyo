@@ -61,6 +61,12 @@ class UI:
         steps_per_beat_entry.bind("<Return>", lambda e: self._set_steps_per_beat())
         steps_per_beat_entry.bind("<FocusOut>", lambda e: self._set_steps_per_beat())
 
+        # Disable spacebar from text fields
+        bpm_entry.bind("<space>", lambda e: self._toggle_play() or "break")
+        steps_entry.bind("<space>", lambda e: self._toggle_play() or "break")
+        steps_per_beat_entry.bind("<space>", lambda e: self._toggle_play() or "break")
+
+
         # Sequence manipulation buttons
         tk.Button(toolbar, text="Add track", width=20,
                   command=self._add_track).pack(side=tk.RIGHT)
