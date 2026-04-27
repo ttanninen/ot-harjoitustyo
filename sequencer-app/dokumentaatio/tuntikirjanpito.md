@@ -15,4 +15,5 @@
 | 19.4  | 4    | Unit-testien kirjoittaminen sequencer-moduulille ja koodikannan formatointi. |
 | 20.4  | 2    | Sovelluslogiikan siistiminen. | 
 | 25.4  | 2    | Sekvenssin pituuden ja tahtilajin muokkaaminen |
-| YHT.  | 36   | |
+| 28.4  | 2    | Käyttäjän lataaman äänitiedoston pituuden tarkastus. Pydub tutustuminen ja asennus. |
+| YHT.  | 38   | |
