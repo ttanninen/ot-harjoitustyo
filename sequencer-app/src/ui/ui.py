@@ -2,6 +2,7 @@ import os
 import tkinter as tk
 from tkinter import filedialog as fd
 from tkinter import simpledialog
+from tkinter import messagebox
 
 
 class UI:
@@ -269,10 +270,13 @@ class UI:
             return
 
         filename = os.path.splitext(os.path.basename(audio_file))[0]
-
-        self.app.sequence.add_track(audio_file, filename)
-        self.rebuild_grid()
-
+        
+        try:
+            self.app.sequence.add_track(audio_file, filename)
+            self.rebuild_grid()
+        except ValueError as e:
+            messagebox.showerror("Invalid sample", e)
+        
     def _rename_track(self, track):
         new_name = simpledialog.askstring(
             "Rename track", "Enter new name: ", initialvalue=track.name)

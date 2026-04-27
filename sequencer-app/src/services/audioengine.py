@@ -2,6 +2,8 @@ import queue
 import numpy as np
 import miniaudio
 
+MAX_SAMPLE_DURATION = 10.0
+
 def load_sound(filename: str):
     '''
     Read waveform (numpy array) and samplerate from file
@@ -14,6 +16,14 @@ def load_sound(filename: str):
         sample_rate=44100,
     )
     data = np.frombuffer(decoded.samples, dtype=np.float32).copy()
+    
+    duration = len(data) / decoded.sample_rate
+    if duration > MAX_SAMPLE_DURATION:
+        raise ValueError(
+            f"File duration is {duration:.1f}s."
+            f"Maximum allowed is {MAX_SAMPLE_DURATION}"
+        )
+
     return data, decoded.sample_rate
 
 
