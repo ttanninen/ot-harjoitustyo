@@ -90,17 +90,19 @@ class testSequence(unittest.TestCase):
         self.assertEqual(self.sequence.tracks[1].name, "test_name2")
 
     def test_sequence_length_with_no_tracks(self):
-        self.assertEqual(self.sequence.length(), 0)
+        self.assertEqual(self.sequence.length(), 16)
 
     def test_sequence_length_with_empty_track(self):
         self.sequence.add_track(self.filename, self.track1)
         self.sequence.tracks[0].set_length(0)
+        self.sequence.set_length(len(self.sequence.tracks[0].pattern))
 
         self.assertEqual(self.sequence.length(), 0)
 
     def test_sequence_length_with_filled_track(self):
         self.sequence.add_track(self.filename, self.track1)
         self.sequence.tracks[0].replace_pattern([1,0,0,0])
+        self.sequence.set_length(len(self.sequence.tracks[0].pattern))
         self.assertEqual(self.sequence.length(), 4)
 
     def test_step_duration(self):
@@ -200,8 +202,10 @@ class testSequence(unittest.TestCase):
         self.assertIsNone(self.sequence._thread, False)
 
     def test_clear_pattern(self):
+        test_pattern = [1,0,0,0]
         self.sequence.add_track(self.filename, self.track1)
-        self.sequence.tracks[0].replace_pattern([1,0,0,0])
+        self.sequence.tracks[0].replace_pattern(test_pattern)
+        self.sequence.set_length(len(test_pattern))
         self.sequence.clear_pattern()
 
         self.assertEqual(
