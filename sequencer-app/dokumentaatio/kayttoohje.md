@@ -1,6 +1,6 @@
 # Käyttöohje
 
-Viimeisin release.
+Lataa viimeisin [release](https://github.com/ttanninen/ot-harjoitustyo/releases)
 
 ## Käyttöliittymä
 <img width="614" height="142" alt="GUI_Release_2" src="https://github.com/user-attachments/assets/ab5da76f-25e0-4161-ae6a-28a07c5075db" />
