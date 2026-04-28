@@ -59,3 +59,4 @@ poetry run invoke lint
 - [Tuntikirjanpito](/sequencer-app/dokumentaatio/tuntikirjanpito.md)
 - [Changelog](/sequencer-app/dokumentaatio/changelog.md)
 - [Arkkitehtuuri](/sequencer-app/dokumentaatio/arkkitehtuuri.md)
+- [Releaset](https://github.com/ttanninen/ot-harjoitustyo/releases)
