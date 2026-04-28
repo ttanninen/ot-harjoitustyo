@@ -27,9 +27,15 @@ Sequencer luokka vastaa varsinaisen sekvensserin toiminnasta looppaamalla Track-
 
 ## Päätoiminnallisuudet
 
-Sekvenssikaavio uuden raidan lisäämisestä käyttöliittymän kautta:
-<img width="519" height="361" alt="add_track_diag drawio" src="https://github.com/user-attachments/assets/981bc41f-4441-4f15-8e1a-ddfd4f5aedda" />
+Ohessa muutamia esimerkkejä sovelluksen toimintalogiikasta:
 
-Sekvenssikaavio play-nappulan painamisesta äänitiedoston toistoon:
+### Uuden raidan lisääminen:
+\
+<img width="519" height="361" alt="add_track_diag drawio" src="https://github.com/user-attachments/assets/981bc41f-4441-4f15-8e1a-ddfd4f5aedda" />
+Käyttäjän painaessa "Add Track" nappia käyttöliittymässä aukeaa TKinterin file dialog window. Valittava tiedostomuoto on wav tiedosto.
+
+
+### Sekvenssin käynnistäminen ja äänen toisto:
+\
 <img width="779" height="264" alt="play_sound drawio" src="https://github.com/user-attachments/assets/6cf6bcee-1ac1-4755-98b9-4cc12cba65e1" />
 
