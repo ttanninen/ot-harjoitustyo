@@ -10,7 +10,7 @@ Ominaisuuksia:
 - Samplejen lataaminen
 - Raidan äänentason säätäminen
 - Hiirellä käytettävä käyttöliittymä
-- Gridin pituuden määritteleminen (Esim. 0-16 askelta) (Todo)
+- Gridin pituuden määritteleminen (Esim. 0-16 askelta)
 - Sekvenssin tallentaminen .wav:iksi (Todo)
 - Sekvenssin looppaaminen
 
