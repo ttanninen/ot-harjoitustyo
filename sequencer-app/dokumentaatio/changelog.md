@@ -14,4 +14,5 @@
 
 ## Viikko 6
 - Sekvenssin pituutta ja tahtilajia voi muokata käyttöliittymän työkalupalkissa.
+- Sekvenssin voi käynnistää ja pysäyttää välilyönnillä.
 
