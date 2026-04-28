@@ -68,10 +68,15 @@ class UI:
 
 
         # Sequence manipulation buttons
-        tk.Button(toolbar, text="Add track", width=20,
-                  command=self._add_track).pack(side=tk.RIGHT)
-        tk.Button(toolbar, text="Clear pattern", width=20,
-                  command=self._clear_pattern).pack(side=tk.RIGHT)
+        add_track_btn = tk.Button(toolbar, text="Add track", width=20,
+                                  command=self._add_track)
+        add_track_btn.pack(side=tk.RIGHT)
+        add_track_btn.bind("<space>", lambda e:self._toggle_play() or "break")
+        
+        clear_pattern_btn = tk.Button(toolbar, text="Clear pattern", width=20,
+                                      command=self._clear_pattern)
+        clear_pattern_btn.pack(side=tk.RIGHT)
+        clear_pattern_btn.bind("<space>", lambda e:self._toggle_play() or "break")
 
     # Sequencer playhead indicators
     def build_indicators(self):
