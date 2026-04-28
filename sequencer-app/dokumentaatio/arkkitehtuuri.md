@@ -32,7 +32,7 @@ Ohessa muutamia esimerkkejä sovelluksen toimintalogiikasta:
 ### Uuden raidan lisääminen:
 \
 <img width="519" height="361" alt="add_track_diag drawio" src="https://github.com/user-attachments/assets/981bc41f-4441-4f15-8e1a-ddfd4f5aedda" />
-Käyttäjän painaessa "Add Track" nappia käyttöliittymässä aukeaa TKinterin file dialog window. Valittava tiedostomuoto on wav tiedosto.
+Käyttäjän painaessa "Add Track" nappia käyttöliittymässä aukeaa TKinterin file dialog window. Valittava tiedostomuoto on wav tiedosto. UI palauttaa tiedoston nimen Sequencer-oliolle joka kutsuu load_sound() metodia AudioEngine pakkauksesta (muutetaan myöhemmin omaan tiedostojen käsittelypakkaukseen). Metodi load_sound() tarkistaa että tiedosto on oikeanlainen ja nostaa ValueError virheilmoituksen, mikäli näin ei ole. Mikäli tiedosto on soveltuva, siitä muodostetaan Track-olio, joka lisätään sekvenssiin uudeksi raidaksi. Lopuksi UI kutsuu rebuild_grid() metodia, jolla sekvensserin näkymä päivitetään uuden raidan kanssa.
 
 
 ### Sekvenssin käynnistäminen ja äänen toisto:
