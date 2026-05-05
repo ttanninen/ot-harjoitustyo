@@ -69,25 +69,24 @@ class UI:
 
 
         # Sequence manipulation buttons
-        add_track_btn = tk.Button(toolbar, text="Add track", width=20,
-                                  command=self._add_track)
-        add_track_btn.pack(side=tk.RIGHT)
-        add_track_btn.bind("<space>", lambda e:self._toggle_play() or "break")
-
-        clear_pattern_btn = tk.Button(toolbar, text="Clear pattern", width=20,
+        clear_pattern_btn = tk.Button(toolbar, text="Clear pattern", width=10,
                                       command=self._clear_pattern)
         clear_pattern_btn.pack(side=tk.RIGHT)
         clear_pattern_btn.bind("<space>", lambda e:self._toggle_play() or "break")
-
-        save_sequence_btn = tk.Button(toolbar, text="Save sequence", width=20,
+        save_sequence_btn = tk.Button(toolbar, text="Save sequence", width=10,
                                       command=self._save_sequence)
         save_sequence_btn.pack(side=tk.RIGHT)
         save_sequence_btn.bind("<space>", lambda e:self._toggle_play() or "break")
 
-        load_sequence_btn = tk.Button(toolbar, text="Load sequence", width=20,
+        load_sequence_btn = tk.Button(toolbar, text="Load sequence", width=10,
                                       command=self._load_sequence)
         load_sequence_btn.pack(side=tk.RIGHT)
         load_sequence_btn.bind("<space>", lambda e:self._toggle_play() or "break")
+
+        add_track_btn = tk.Button(toolbar, text="Add track", width=10,
+                                  command=self._add_track)
+        add_track_btn.pack(side=tk.RIGHT)
+        add_track_btn.bind("<space>", lambda e:self._toggle_play() or "break")
 
     # Sequencer playhead indicators
     def build_indicators(self):
@@ -257,7 +256,7 @@ class UI:
                 self.rebuild_grid()
             else:
                 self._steps_var.set(str(self.app.sequence.num_steps))
-        
+
         except ValueError:
             self._steps_var.set(str(self.app.sequence.num_steps))
 
@@ -269,7 +268,7 @@ class UI:
                 self.rebuild_grid()
             else:
                 self._steps_per_beat_var.set(str(self.app.sequence.steps_per_beat))
-            
+
         except ValueError:
             self._steps_per_beat_var.set(str(self.app.sequence.steps_per_beat))
 
@@ -318,10 +317,9 @@ class UI:
 
         try:
             save_sequence(self.app.sequence, filename)
-            messagebox.showinfo(title="Save sequence", message="Sequence saved!")
-        except TypeError as e:
-            messagebox.showerror("Error saving file", e)
- 
+        except Exception as e:
+            messagebox.showerror("Error saving file", str(e))
+
     def _load_sequence(self):
         filetypes = (("Sequencer files", "*.seqjson"),)
 
@@ -336,14 +334,14 @@ class UI:
         )
         if not filename:
             return
-        
+
         self.app.sequence.stop()
         sequence = load_sequence(self.app.engine, filename)
 
 
         if sequence is None:
             return
-        
+
         self.app.sequence = sequence
         self._steps_var.set(str(sequence.num_steps))
         self._bpm_var.set(str(sequence.bpm))
