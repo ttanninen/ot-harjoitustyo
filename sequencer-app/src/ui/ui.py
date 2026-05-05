@@ -4,6 +4,7 @@ from tkinter import filedialog as fd
 from tkinter import simpledialog
 from tkinter import messagebox
 
+from services.files import save_sequence, load_sequence
 
 class UI:
     def __init__(self, root, app):
@@ -77,6 +78,11 @@ class UI:
                                       command=self._clear_pattern)
         clear_pattern_btn.pack(side=tk.RIGHT)
         clear_pattern_btn.bind("<space>", lambda e:self._toggle_play() or "break")
+
+        save_sequence_btn = tk.Button(toolbar, text="Save sequence", width=20,
+                                      command=self._save_sequence)
+        save_sequence_btn.pack(side=tk.RIGHT)
+        save_sequence_btn.bind("<space>", lambda e:self._toggle_play() or "break")
 
     # Sequencer playhead indicators
     def build_indicators(self):
@@ -289,7 +295,28 @@ class UI:
             self.rebuild_grid()
         except ValueError as e:
             messagebox.showerror("Invalid sample", e)
-        
+
+    def _save_sequence(self):
+        filetypes = (("Sequencer files", "*.seqjson"),)
+
+        initial_dir = os.path.abspath(os.path.join(
+            os.path.dirname(__file__), "..", "projects"))
+
+        filename = fd.asksaveasfilename(
+            title="Save sequence",
+            initialdir=initial_dir,
+            defaultextension=".seqjson",
+            filetypes=filetypes,
+        )
+        if not filename:
+            return
+
+        try:
+            save_sequence(self.app.sequence, filename)
+            messagebox.showinfo(title="Save sequence", message="Sequence saved!")
+        except TypeError as e:
+            messagebox.showerror("Error saving file", e)
+ 
     def _rename_track(self, track):
         new_name = simpledialog.askstring(
             "Rename track", "Enter new name: ", initialvalue=track.name)
