@@ -108,6 +108,7 @@ class Sequence:
         self._playing = False
         self._paused = False
         self._current_step = 0
+        self._active_step = 0
         self._thread = None
 
     # Properties to be called from the UI:
@@ -121,7 +122,7 @@ class Sequence:
 
     @property
     def current_step(self):
-        return self._current_step
+        return self._active_step
 
     def add_track(self, filename, name, pattern: list | None = None):
         """Creates and adds a track-object to sequence. New track is placed last in the tracks list.
@@ -267,6 +268,7 @@ class Sequence:
             if not self.tracks:
                 self._playing = False
                 break
+            self._active_step = self._current_step
             self._trigger_step(self._current_step)
             self._current_step = (self._current_step + 1) % self.length() # Loop the steps
             next_step_time += self._step_duration()
