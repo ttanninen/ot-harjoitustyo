@@ -1,5 +1,6 @@
 import miniaudio
 import numpy as np
+
 from config import MAX_SAMPLE_DURATION
 
 def load_sound(filename: str):
