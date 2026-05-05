@@ -1,5 +1,12 @@
-import miniaudio
+import base64
+import json
+import io
 import numpy as np
+from scipy.io import wavfile
+
+
+import miniaudio
+
 
 from config import MAX_SAMPLE_DURATION
 
@@ -29,3 +36,36 @@ def load_sound(filename: str):
         )
 
     return data, decoded.sample_rate
+
+def save_sequence(sequence, filename: str):
+    tracks = []
+
+    for track in sequence.tracks:
+        buffer =  io.BytesIO()
+        wavfile.write(buffer, track.samplerate, track.data)
+        audio_b64 = base64.b64encode(buffer.getvalue()).decode("ascii")
+
+        tracks.append({
+            "name": track.name,
+            "volume": track.volume,
+            "pan": track.pan,
+            "pattern": track.pattern.tolist(),
+            "audio": audio_b64,
+        })
+
+        sequence_payload = {
+            "bpm": sequence.bpm,
+            "steps_per_beat": sequence.steps_per_beat,
+            "num_steps": sequence.num_steps,
+            "tracks": tracks,
+        }
+
+    with open(filename, "w", encoding="utf-8") as f:
+        try:
+            json.dump(sequence_payload, f)
+        except:
+            raise TypeError("Track saving failed")
+
+def load_sequence(filename):
+    
+    return
