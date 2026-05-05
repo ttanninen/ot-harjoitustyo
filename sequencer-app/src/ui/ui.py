@@ -4,7 +4,7 @@ from tkinter import filedialog as fd
 from tkinter import simpledialog
 from tkinter import messagebox
 
-from services.files import save_sequence, load_sequence
+from services.files import save_sequence, load_sequence, export_wav
 
 class UI:
     def __init__(self, root, app):
@@ -73,6 +73,12 @@ class UI:
                                       command=self._clear_pattern)
         clear_pattern_btn.pack(side=tk.RIGHT)
         clear_pattern_btn.bind("<space>", lambda e:self._toggle_play() or "break")
+
+        export_wav_btn = tk.Button(toolbar, text="Export wav", width=10,
+                                 command=self._export_wav)
+        export_wav_btn.pack(side=tk.RIGHT)
+        export_wav_btn.bind("<space>", lambda e:self._toggle_play() or "break")
+
         save_sequence_btn = tk.Button(toolbar, text="Save sequence", width=10,
                                       command=self._save_sequence)
         save_sequence_btn.pack(side=tk.RIGHT)
@@ -347,6 +353,25 @@ class UI:
         self._bpm_var.set(str(sequence.bpm))
         self._steps_per_beat_var.set(str(sequence.steps_per_beat))
         self.rebuild_grid()
+
+    def _export_wav(self):
+        filetypes = (
+            ("WAV files", "*.wav"),
+        )
+
+        initial_dir = os.path.abspath(os.path.join(
+            os.path.dirname(__file__), "..", "exports"))
+
+        filename = fd.asksaveasfilename(
+            title="Save as wav",
+            initialdir=initial_dir,
+            filetypes=filetypes,
+        )
+
+        if not filename:
+            return
+
+        export_wav(self.app.sequence, filename)
 
     def _rename_track(self, track):
         new_name = simpledialog.askstring(
