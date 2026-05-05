@@ -2,8 +2,7 @@ import threading
 import time
 import numpy as np
 
-from services.audioengine import AudioEngine
-from services.files import load_sound
+from services.audioengine import AudioEngine, load_sound
 
 class Track:
     def __init__(self, filename: str, name: str, pattern: list | None = None):
