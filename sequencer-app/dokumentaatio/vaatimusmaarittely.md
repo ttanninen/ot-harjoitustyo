@@ -18,9 +18,9 @@ Sovelluksessa on graafinen käyttöliittymä, jota käytetään hiirellä. Sekve
   - Sovelluksessa on mukana tekijänoikeusvapaita äänitiedostoja ohjelman testaamiseksi TEHTY
 - Käyttäjä voi säätää raidan äänenvoimakkuutta TEHTY
 - Sekvenssin toiston voi käynnistää ja pysäyttää TEHTY
-- Sekvenssin voi tallentaa .wav muotoiseksi äänitiedostoksi
-- Sekvenssin askeleet voi tallentaa tietokantaan muistiin
-- Tallennetun sekvenssin askeleet voi ladata tietokannasta
+- Sekvenssin voi tallentaa .wav muotoiseksi äänitiedostoksi TEHTY
+- Sekvenssin voi tallentaa tiedostoon TEHTY
+- Tallennetun sekvenssin voi ladata tiedostosta TEHTY
 
 ## Toteutus
 
