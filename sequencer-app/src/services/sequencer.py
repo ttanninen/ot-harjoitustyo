@@ -27,6 +27,18 @@ class Track:
         self.pan = 0.0
         self.data, self.samplerate = load_sound(filename)
 
+    @classmethod
+    def load_track_from_file(cls, data: np.ndarray, samplerate: int, name: str, pattern: list):
+        track = cls.__new__(cls)
+        track.filename = None
+        track.name = name
+        track.pattern = np.array(pattern)
+        track.volume = 1.0
+        track.pan = 0.0
+        track.data = data
+        track.samplerate = samplerate
+        return track
+
     def replace_pattern(self, new_pattern: list):
         """Replace track pattern at once with a new one.
 
