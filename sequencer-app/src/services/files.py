@@ -4,10 +4,9 @@ import io
 import numpy as np
 from scipy.io import wavfile
 
-
 import miniaudio
 
-
+from services.audioengine import AudioEngine
 from config import MAX_SAMPLE_DURATION
 
 def load_sound(filename: str):
@@ -53,12 +52,12 @@ def save_sequence(sequence, filename: str):
             "audio": audio_b64,
         })
 
-        sequence_payload = {
-            "bpm": sequence.bpm,
-            "steps_per_beat": sequence.steps_per_beat,
-            "num_steps": sequence.num_steps,
-            "tracks": tracks,
-        }
+    sequence_payload = {
+        "bpm": sequence.bpm,
+        "steps_per_beat": sequence.steps_per_beat,
+        "num_steps": sequence.num_steps,
+        "tracks": tracks,
+    }
 
     with open(filename, "w", encoding="utf-8") as f:
         try:
@@ -66,6 +65,31 @@ def save_sequence(sequence, filename: str):
         except:
             raise TypeError("Track saving failed")
 
-def load_sequence(filename):
-    
-    return
+def load_sequence(engine: AudioEngine, filename):
+    from services.sequencer import Sequence, Track
+
+    with open(filename, "r", encoding="utf-8") as f:
+        payload = json.load(f)
+
+    sequence = Sequence(
+        bpm = payload["bpm"],
+        steps_per_beat = payload["steps_per_beat"],
+        engine = engine,
+        num_steps = payload["num_steps"],
+    )
+
+    for t in payload["tracks"]:
+        audio_bytes = base64.b64decode(t["audio"])
+        buffer = io.BytesIO(audio_bytes)
+        samplerate, data = wavfile.read(buffer)
+
+        track = Track.load_track_from_file(
+            data=data,
+            samplerate=samplerate,
+            name=t["name"],
+            pattern=t["pattern"],
+        )
+        track.volume = t["volume"]
+        track.pan = t["pan"]
+        sequence.tracks.append(track)
+    return sequence

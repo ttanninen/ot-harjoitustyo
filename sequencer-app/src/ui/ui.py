@@ -84,6 +84,11 @@ class UI:
         save_sequence_btn.pack(side=tk.RIGHT)
         save_sequence_btn.bind("<space>", lambda e:self._toggle_play() or "break")
 
+        load_sequence_btn = tk.Button(toolbar, text="Load sequence", width=20,
+                                      command=self._load_sequence)
+        load_sequence_btn.pack(side=tk.RIGHT)
+        load_sequence_btn.bind("<space>", lambda e:self._toggle_play() or "break")
+
     # Sequencer playhead indicators
     def build_indicators(self):
         self.indicator_canvas = tk.Canvas(
@@ -289,7 +294,7 @@ class UI:
             return
 
         filename = os.path.splitext(os.path.basename(audio_file))[0]
-        
+
         try:
             self.app.sequence.add_track(audio_file, filename)
             self.rebuild_grid()
@@ -317,6 +322,34 @@ class UI:
         except TypeError as e:
             messagebox.showerror("Error saving file", e)
  
+    def _load_sequence(self):
+        filetypes = (("Sequencer files", "*.seqjson"),)
+
+        initial_dir = os.path.abspath(os.path.join(
+            os.path.dirname(__file__), "..", "projects"))
+
+        filename = fd.askopenfilename(
+            title="Load sequence",
+            initialdir=initial_dir,
+            defaultextension=".seqjson",
+            filetypes=filetypes,
+        )
+        if not filename:
+            return
+        
+        self.app.sequence.stop()
+        sequence = load_sequence(self.app.engine, filename)
+
+
+        if sequence is None:
+            return
+        
+        self.app.sequence = sequence
+        self._steps_var.set(str(sequence.num_steps))
+        self._bpm_var.set(str(sequence.bpm))
+        self._steps_per_beat_var.set(str(sequence.steps_per_beat))
+        self.rebuild_grid()
+
     def _rename_track(self, track):
         new_name = simpledialog.askstring(
             "Rename track", "Enter new name: ", initialvalue=track.name)
