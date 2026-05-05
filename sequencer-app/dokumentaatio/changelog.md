@@ -16,3 +16,6 @@
 - Sekvenssin pituutta ja tahtilajia voi muokata käyttöliittymän työkalupalkissa.
 - Sekvenssin voi käynnistää ja pysäyttää välilyönnillä.
 
+## Viikko 7
+- Koko sekvenssin voi tallentaa tiedostoon ja tallennetun sekvenssin voi ladata tiedostosta.
+- Sekvenssin voi tallentaa yksikanavaisena wav tiedostona.
