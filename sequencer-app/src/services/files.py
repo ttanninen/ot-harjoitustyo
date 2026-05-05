@@ -60,10 +60,7 @@ def save_sequence(sequence, filename: str):
     }
 
     with open(filename, "w", encoding="utf-8") as f:
-        try:
-            json.dump(sequence_payload, f)
-        except:
-            raise TypeError("Track saving failed")
+        json.dump(sequence_payload, f)
 
 def load_sequence(engine: AudioEngine, filename):
     from services.sequencer import Sequence, Track
