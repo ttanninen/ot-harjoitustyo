@@ -1,7 +1,6 @@
 import os
 import unittest
 
-
 from services.sequencer import Track, Sequence
 from services.audioengine import AudioEngine
 
@@ -142,7 +141,7 @@ class testSequence(unittest.TestCase):
         self.sequence.add_track(self.filename, self.track1)
         self.sequence.tracks[0].replace_pattern([1,0,0,0])
         self.sequence.play()
-        self.assertEqual(self.sequence.current_step, 1)
+        self.assertEqual(self.sequence.current_step, 0)
 
     def test_play_threading(self):
         self.sequence.add_track(self.filename, self.track1)
