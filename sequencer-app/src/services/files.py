@@ -8,6 +8,12 @@ from services.audioengine import AudioEngine
 from services.sequencer import Sequence, Track
 
 def save_sequence(sequence: Sequence, filename: str):
+    """Saves current sequence into json-file. Raw audio data is converted
+    into an Ascii string using base64 encoding and included in the save file.
+    Args:
+        sequence (Sequence): Sequence object to be saved.
+        filename (str): Filename of the saved sequence
+    """
     tracks = []
 
     for track in sequence.tracks:
@@ -34,6 +40,15 @@ def save_sequence(sequence: Sequence, filename: str):
         json.dump(sequence_payload, f)
 
 def load_sequence(engine: AudioEngine, filename):
+    """Loads saved sequence from a json file.
+
+    Args:
+        engine (AudioEngine): AudioEngine object for loaded sequence
+        filename (_type_): filename of the saved sequence
+
+    Returns:
+        _type_: Loaded sequence as Sequence object
+    """
     with open(filename, "r", encoding="utf-8") as f:
         payload = json.load(f)
 
@@ -62,6 +77,12 @@ def load_sequence(engine: AudioEngine, filename):
 
 
 def export_wav(sequence: Sequence, filename: str):
+    """Exports a single run of the sequence as mono wav file.
+
+    Args:
+        sequence (Sequence): Sequence object to be exported
+        filename (str): Filename of the wav-file to be exported
+    """
     sample_rate = 44100
     step_samples = int((60 / sequence.bpm) / sequence.steps_per_beat * sample_rate)
     total_samples = step_samples * sequence.num_steps
