@@ -8,7 +8,7 @@ from services.audioengine import AudioEngine
 from services.sequencer import Sequence, Track
 
 def save_sequence(sequence: Sequence, filename: str):
-    """Saves current sequence into json-file. Raw audio data is converted
+    """Saves current sequence into json-file (.seqjson). Raw audio data is converted
     into an Ascii string using base64 encoding and included in the save file.
     Args:
         sequence (Sequence): Sequence object to be saved.
@@ -40,7 +40,7 @@ def save_sequence(sequence: Sequence, filename: str):
         json.dump(sequence_payload, f)
 
 def load_sequence(engine: AudioEngine, filename):
-    """Loads saved sequence from a json file.
+    """Loads saved sequence from a json (.segjson) file.
 
     Args:
         engine (AudioEngine): AudioEngine object for loaded sequence
