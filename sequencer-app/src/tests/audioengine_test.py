@@ -63,7 +63,6 @@ class testAudioEngine(unittest.TestCase):
         self.engine.start()
 
         self.assertTrue(self.engine._device.running)
-        self.engine.stop()
 
     def test_init_stopped_audio_stream(self):
         self.assertFalse(self.engine._device.running)
@@ -80,12 +79,12 @@ class testAudioEngine(unittest.TestCase):
         self.engine.play(test_data)
 
         self.assertFalse(self.engine._pending.empty())
-        self.engine.stop()
 
     def test_generator_yield_bytes(self):
         generator = self.engine._generator()
         next(generator)
         frames = generator.send(1)
+
         self.assertIsInstance(frames, bytes)
 
     def test_generator_yields_sound_data(self):
@@ -98,6 +97,7 @@ class testAudioEngine(unittest.TestCase):
         frames = generator.send(len(test_data))
 
         mixed = np.frombuffer(frames, dtype=np.float32)
+
         self.assertTrue(np.any(mixed != 0))
 
     def test_clipping(self):
@@ -110,7 +110,9 @@ class testAudioEngine(unittest.TestCase):
         frames = generator.send(len(test_data))
 
         mixed = np.frombuffer(frames, dtype=np.float32)
+
         self.assertLessEqual(mixed.max(), 1.0)
         self.assertGreaterEqual(mixed.max(),-1.0)
 
-
+    def tearDown(self):
+        self.engine.stop()
