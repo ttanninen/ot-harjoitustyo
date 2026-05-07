@@ -18,4 +18,5 @@
 | 27.4  | 2    | Käyttäjän lataaman äänitiedoston pituuden tarkastus. Pydub tutustuminen ja asennus. |
 | 28.4  | 3    | Dokumentaation laadintaa. |
 | 5.5   | 4    | Sekvenssin tallennus ja lataaminen lisätty. |
-| YHT.  | 41   | |
+| 7.5   | 4    | Unittestien tekoa, docstringejä ja linttausta. |
+| YHT.  | 51   | |
