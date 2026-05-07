@@ -24,10 +24,10 @@ Sovelluksessa on graafinen käyttöliittymä, jota käytetään hiirellä. Sekve
 
 ## Toteutus
 
-- Käyttöliittymä: TKinter TEHTY OSITTAIN
-- Äänitiedostojen toisto: Pygame mixer tai pyaudio TEHTY
-- Äänitiedostojen tallennus: pydub
-- Sekvenssin askeleiden tallennus: SQLite3
+- Käyttöliittymä: TKinter
+- Äänitiedostojen toisto: Miniaudio
+- Äänitiedostojen tallennus: Scipy.io
+- Sekvenssin tallennus: json-tiedosto
 
 ## Jatkokehitysideoita
 
