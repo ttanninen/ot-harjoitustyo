@@ -25,6 +25,8 @@ Pakkaus Sequencer sisältää luokat Track ja Sequence. Käyttäjän luoma sekve
 
 Sequencer luokka vastaa varsinaisen sekvensserin toiminnasta looppaamalla Track-olioita läpi ja lähettämällä niiden sisältämiä äänidata tietoja audioenginelle toistoa varten. Sequencer sisältää myös kaikki käyttöliittymälle tarjottavat metodit sekvenssin toistamiseen ja raitojen askelien muokkaamiseen. Sekvenssin asetukset, kuten tempo ja tahtilaji ovat myös muokattavissa käyttöliittymän kautta.
 
+Viimeisenä pakkauksena on Files, joka sisältää tiedostojen käsittelyn hoitavat funktiot, eli sekvenssin tallennuksen ja lataamisen sekä wav tiedostojen luonnin. Tiedostohallinnan funktioita kutsutaan käyttöliittymästä.
+
 ## Päätoiminnallisuudet
 
 Ohessa muutamia esimerkkejä sovelluksen toimintalogiikasta:
