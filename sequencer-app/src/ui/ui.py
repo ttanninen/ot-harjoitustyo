@@ -24,9 +24,8 @@ class UI:
         self._poll_step()
 
     def build_toolbar(self):
-        '''
-        Toolbar for playback control and sequence management
-        '''
+        """Toolbar for playback control and sequence management
+        """
         toolbar = tk.Frame(self.root)
         toolbar.pack(side=tk.TOP, fill=tk.X)
 
@@ -45,6 +44,7 @@ class UI:
         bpm_entry.pack(side=tk.LEFT)
         bpm_entry.bind("<Return>", lambda e: self._set_bpm())
         bpm_entry.bind("<FocusOut>", lambda e: self._set_bpm())
+        bpm_entry.bind("<space>", lambda e: self._toggle_play() or "break")
 
         # Sequence length input
         tk.Label(toolbar, text="Steps").pack(side=tk.LEFT, padx=(12,2))
@@ -53,6 +53,7 @@ class UI:
         steps_entry.pack(side=tk.LEFT)
         steps_entry.bind("<Return>", lambda e: self._set_steps())
         steps_entry.bind("<FocusOut>", lambda e: self._set_steps())
+        steps_entry.bind("<space>", lambda e: self._toggle_play() or "break")
 
         # Sequence steps per beat
         tk.Label(toolbar, text="Steps per beat").pack(side=tk.LEFT, padx=(12,2))
@@ -61,12 +62,7 @@ class UI:
         steps_per_beat_entry.pack(side=tk.LEFT)
         steps_per_beat_entry.bind("<Return>", lambda e: self._set_steps_per_beat())
         steps_per_beat_entry.bind("<FocusOut>", lambda e: self._set_steps_per_beat())
-
-        # Disable spacebar from text fields
-        bpm_entry.bind("<space>", lambda e: self._toggle_play() or "break")
-        steps_entry.bind("<space>", lambda e: self._toggle_play() or "break")
         steps_per_beat_entry.bind("<space>", lambda e: self._toggle_play() or "break")
-
 
         # Sequence manipulation buttons
         clear_pattern_btn = tk.Button(toolbar, text="Clear pattern", width=10,
@@ -95,8 +91,9 @@ class UI:
         add_track_btn.bind("<space>", lambda e:self._toggle_play() or "break")
 
     ### AI generated code begins ###
-    # Sequencer playhead indicators
     def build_indicators(self):
+        """Sequencer playhead indicators on top of step grid
+        """
         self.indicator_canvas = tk.Canvas(
             self.root, height=20, bg=self.root.cget("bg"), highlightthickness=0)
         self.indicator_canvas.pack(side=tk.TOP, fill=tk.X, padx=2)
@@ -177,7 +174,7 @@ class UI:
                                 command=lambda ti=track_i, si=step_i: self._toggle_step(
                                     ti, si),
                                 )
-                btn.grid(row=track_i, column=step_i + 1)
+                btn.grid(row=track_i, column=step_i + 1) # Column 0 reserved for track ctrl.
                 row_buttons.append(btn)
 
             self.step_buttons.append(row_buttons)
@@ -197,6 +194,14 @@ class UI:
 
     # Track controls
     def build_track_controls(self, parent, track_i, track):
+        """Track manipulation controls for each track in sequence.
+        Includes track name, volume, pan, track row position and remove button.
+
+        Args:
+            parent (_type_): Grid frame, where the track control frame is inserted
+            track_i (_type_): Track number in sequence
+            track (_type_): Track object of the corresponding track
+        """
         frame = tk.Frame(parent)
         frame.grid(row=track_i, column=0, padx=(4, 8), pady=2, sticky="w")
 
@@ -229,12 +234,11 @@ class UI:
         pan_slider.set(track.pan)
         pan_slider.pack(side=tk.LEFT)
 
-        # Move track up button
+        # Move track up/down
         tk.Button(frame, text="▲", width=2,
                   command=lambda t=track: self._move_track_up(t)
                   ).pack(side=tk.LEFT, padx=2)
 
-        # Move track down button
         tk.Button(frame, text="▼", width=2,
                   command=lambda t=track: self._move_track_down(t)
                   ).pack(side=tk.LEFT, padx=2)
