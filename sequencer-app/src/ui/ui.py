@@ -94,6 +94,7 @@ class UI:
         add_track_btn.pack(side=tk.RIGHT)
         add_track_btn.bind("<space>", lambda e:self._toggle_play() or "break")
 
+    ### AI generated code begins ###
     # Sequencer playhead indicators
     def build_indicators(self):
         self.indicator_canvas = tk.Canvas(
@@ -134,7 +135,7 @@ class UI:
             self._update_indicators(step)
         self.root.after(16, self._poll_step)
 
-    # Step sequncer grid
+    # Step sequencer grid
     def build_grid(self):
         self.grid_frame = tk.Frame(self.root)
         self.grid_frame.pack(side=tk.TOP, fill=tk.BOTH,
@@ -192,6 +193,7 @@ class UI:
         else:
             track.write_step(step_i)
             btn.config(relief=tk.SUNKEN, bg="#4caf50")
+    ### AI generated code ends ###
 
     # Track controls
     def build_track_controls(self, parent, track_i, track):
