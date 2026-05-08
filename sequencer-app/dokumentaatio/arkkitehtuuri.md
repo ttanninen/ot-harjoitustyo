@@ -2,9 +2,9 @@
 
 ## Ohjelman rakenne
 
-Ohjelman alustava pakkausrakenne on kuvattu seuraavassa kaaviossa:
+Ohjelman pakkausrakenne on kuvattu seuraavassa kaaviossa:
 \
-<img width="50%" alt="sequencer_app drawio" src="https://github.com/user-attachments/assets/42a6418d-464e-4f53-85b1-edecdaa14c52" />
+<img width="692" height="461" alt="sequencer_app package drawio" src="https://github.com/user-attachments/assets/be7cd70c-5cc9-46d1-bbb2-a77ece92c278" />
 \
 Services pakkaus sisältää ohjelman toiminnallisuuden eli äänen toistamisesta ja äänitiedostojen käsittelystä vastaava audioengine.py sekä sekvensserin varsinaisen toimintalogiikan sisältävä sequencer.py
 
