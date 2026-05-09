@@ -26,7 +26,14 @@ __Exports__ hakemisto on oletushakemisto tallennetuille wav-muotoisille sekvenss
 
 ## Käyttöliittymä
 
-Sovelluksen käyttöliittymä koostuu yhdestä näkymästä, jossa kaikki sekvensserin toiminnallisuudet ovat nähtävillä. Sekvensseri-ikkunan koko mukautuu dynaamisesti sekvenssin pituuden ja raitojen määrän eli askeltenruudukon koon mukaan. 
+Käyttöliittymä on rakennettu TKinter-kirjastolla ja se koostuu yhdestä päänäkymästä, joka jakautuu kolmeen pääosaan:
+__Työkalupalkki__ sisältää toistokontrollinapit (play/pause/stop), valinnat sekvenssin asetuksista (tempo, pituus, tahtilaji) sekä sekvenssin hallintaan liittyvät työkalut (tallenna/lataa sekvenssi ja lisää uusi raita)
+
+__Askelindikaattori__ näyttää pienet ympyrät työkalupalkin alla, jossa punainen ympyrä näyttää sekvenssin toistopään sijainnin.
+
+__Askelruudukko__ on TKinter-kirjaston grid-elementti, joka jokainen rivi vastaa yhtä raitaa. Jokaisen raidan vasemmassa reunassa on raidan hallintatyökalut (nimi, äänenvoimakkuus, panorointi, järjestyksen muutos ja poisto). Tämän jälkeen tulevat askelnapit, joista jokainen nappi symboloi yhtä askelta. Askelnapin väri kertoo onko askel aktiivinen, eli soitetaanko sillä askeleella ääni vai ei. Askelruudukon taustaväri määräytyy tahtilajin mukaan.
+
+Sekvensseri-ikkunan koko mukautuu dynaamisesti sekvenssin pituuden ja raitojen määrän eli askelruudukon koon mukaan. Raitojen määrää ei ole rajoitettu, mutta sekvenssin maksimipituus on 32 askelta.
 
 ## Sovelluslogiikka
 Sovellus rakentuu app.py moduulin omistamiin Sequencer ja AudioEngine luokkiin, jotka alustetaan index.py -moduulissa ohjelman käynnistyessä. 
