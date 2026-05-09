@@ -49,5 +49,6 @@ Käyttäjän painaessa "Add Track" nappia käyttöliittymässä aukeaa TKinterin
 
 ### Sekvenssin käynnistäminen ja äänen toisto:
 \
-<img width="779" height="264" alt="play_sound drawio" src="https://github.com/user-attachments/assets/6cf6bcee-1ac1-4755-98b9-4cc12cba65e1" />
+<img width="779" height="264" alt="play_sound_diagram" src="https://github.com/user-attachments/assets/36433a85-66a3-41c1-ad68-6a8994b35557" />
+Käyttäjän painaessa "Play" nappia käyttöliittymässä, ```UI._play()``` kutsuu sekvenssin ```Sequence.play()``` funktiota joka käynnistää sekvenssin ```_play_loop()``` metodin omassa säikeessään. ```_play_loop()```käy sekvenssin askeleita läpi yksi kerrallaan. Jokaisen askeleen kohdalla se tarkistaa mitkä raidat ovat aktiivisia kyseisellä askeleella ja lähettää aktiivisten raitojen äänidatan ```AudioEnginelle```. Metodi ```AudioEngine.play()``` laittaa äänidatan jonoon, josta generaattori poimii sen ja miksaa äänivirran bufferiin. ```_play_loop()```odottaa joka askeleen jälkeen sekvenssin tempon ja tahtilajin mukaisen ajan ennen siirtymistä seuraavaan askeleeseen. ```UI._poll_step()```lukee tasaisin väliajoin (16ms) sekvenssin ```current_step```arvon ja päivittää askelindikaattorin valon näytölle.
 
