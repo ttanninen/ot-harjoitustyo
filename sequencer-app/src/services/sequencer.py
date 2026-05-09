@@ -28,6 +28,18 @@ class Track:
 
     @classmethod
     def load_track_from_file(cls, data: np.ndarray, samplerate: int, name: str, pattern: list):
+        """Class method for generating new track objects directly from
+        loaded data, skipping the need for specifying a filename. 
+
+        Args:
+            data (np.ndarray): Audio data in numpy array
+            samplerate (int): Samplerate of the audio file
+            name (str): Loaded track name
+            pattern (list): Loaded track pattern
+
+        Returns:
+            _type_: Track object
+        """
         track = cls.__new__(cls)
         track.filename = None
         track.name = name
