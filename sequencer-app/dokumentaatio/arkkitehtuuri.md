@@ -1,10 +1,12 @@
 # Arkkitehtuurikuvaus
 
 ## Ohjelman rakenne
-Ohjelma koostuu neljästä pääkomponentista. Ohjelman rakenne on kuvattu seuraavassa pakkauskaaviossa:
+Ohjelman rakenne on kuvattu seuraavassa pakkauskaaviossa:
 \
 <img width="692" height="461" alt="sequencer_app_packages" src="https://github.com/user-attachments/assets/fa720d93-e181-4989-98f3-66a0deb3c200" />
 \
+
+Ohjelma koostuu neljästä pääkomponentista: Sekvensseristä, äänimoottorista, käyttöliittymästä ja tiedostohallinnasta.
 
 __App__ on sovelluksen kontekstinhallitsija. Sen tehtävä on alustaa ja omistaa ```AudioEngine``` sekä ```Sequence``` oliot ja käynnistää tai tarvittaessa sulkea äänivirta (audio stream).
 
