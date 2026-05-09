@@ -1,6 +1,27 @@
 # Käyttöohje
 
-Lataa viimeisin [release](https://github.com/ttanninen/ot-harjoitustyo/releases)
+Lataa viimeisin [release](https://github.com/ttanninen/ot-harjoitustyo/releases) tai kloonaa ohjelman repositorio komennolla:
+```bash
+git clone git@github.com/ttanninen/ot-harjoitustyo/
+```
+## Asennus ja käynnistys
+
+Ohjelma sijaitsee kansiossa ```/sequencer-app/```, jossa kaikki mainitut komennot tulee suorittaa.
+
+Siirry aluksi sequencer-app kansioon:
+```bash
+cd sequencer-app/
+```
+
+Asenna ohjelman vaatimat riippuvuudet:
+```bash
+poetry install
+```
+
+Sovellus käynnistetään komennolla:
+```bash
+poetry run invoke start
+```
 
 ## Käyttöliittymä
 <img width="614" height="142" alt="GUI2" src="https://github.com/user-attachments/assets/ba77116e-f685-4eac-a63a-5f55fea336c7" />
