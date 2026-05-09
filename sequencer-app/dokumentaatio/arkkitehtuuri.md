@@ -1,20 +1,30 @@
 # Arkkitehtuurikuvaus
 
 ## Ohjelman rakenne
-
-Ohjelman pakkausrakenne on kuvattu seuraavassa kaaviossa:
+Ohjelma koostuu neljästä pääkomponentista. Ohjelman rakenne on kuvattu seuraavassa pakkauskaaviossa:
 \
 <img width="692" height="461" alt="sequencer_app_packages" src="https://github.com/user-attachments/assets/fa720d93-e181-4989-98f3-66a0deb3c200" />
 \
-Services pakkaus sisältää ohjelman toiminnallisuuden eli äänen toistamisesta ja äänitiedostojen käsittelystä vastaava audioengine.py sekä sekvensserin varsinaisen toimintalogiikan sisältävä sequencer.py
 
-Toimintalogiikka on eriytetty käyttöliittymästä, joka sijaitsee pakkauksessa ui.py. Käyttöliittymä on pyritty luomaan niin, että mitään sovelluksen toiminnallisuutta ei ole toteutettu vain käyttöliittymän pakkauksessa.
+__App__ on sovelluksen kontekstinhallitsija. Sen tehtävä on alustaa ja omistaa ```AudioEngine``` sekä ```Sequence``` oliot ja käynnistää tai tarvittaessa sulkea äänivirta (audio stream).
 
-Samples hakemistoon voi tallentaa äänitiedostoja niiden helpon löydettävyyden vuoksi. Ohjelma voi kuitenkin avata äänitiedostoja mistä tahansa kansiosta käyttäjän tietokoneella.
+__Sequencer__ sisältää ohjelman päätietomallit eli ```Sequencen``` ja ```Trackin``` eli sekvensserin toiminnallisuudesta huolehtivat luokat. ```Sequence``` sisältää sekvenssin ominaisuudet, kuten tempon ja tahtilajitiedot. ```Sequence``` sisältää listan ```Track``` olioista, jotka sisältävät audiodatan numpy taulukkona sekä toistettavan askelkuvion. 
+
+__AudioEngine__ vastaa äänen toistamisesta miniaudio-kirjaston avulla. Se ylläpitää jonoa soitettavista äänistä ja miksaa ne yhteen reaaliaikaisen generaattorifunktion avulla.
+
+__UI__ eli TKinter-pohjainen käyttöliittymä on eriytetty sekvensserin toimintalogiikasta. Käyttöliittymä piirtää sekvenssin askelruudukon ja työkalupalkit. Käyttöliittymä on pyritty luomaan niin, että mitään sovelluksen toiminnallisuutta ei ole toteutettu ainoastaan käyttöliittymän pakkauksessa.
+
+__Files__ eli tiedostonhallinta vastaa sekvenssin tallentamisesta ja lataamisesta. Sekvenssi tallennetaan tai ladataan JSON-muodossa, jossa äänidata on enkoodattu base64-merkkijonoksi. Tämän lisäksi sekvenssi on mahdollista tallentaa miksattuna yksikanavaisena wav-tiedostona.
+
+__Samples__ hakemisto on oletushakemisto sekvensserin raidoille ladattaville äänitiedostoille. Ohjelma voi kuitenkin avata äänitiedostoja mistä tahansa kansiosta käyttäjän tietokoneella.
+
+__Projects__ hakemisto on oletushakemisto tallennetuille sekvensseille .seqjson -muodossa.
+
+__Exports__ hakemisto on oletushakemisto tallennetuille wav-muotoisille sekvensseille.
 
 ## Käyttöliittymä
 
-Sovelluksen käyttöliittymä koostuu yhdestä näkymästä, jossa kaikki sekvensserin toiminnallisuudet ovat nähtävillä. Sekvensseri-ikkunan koko mukautuu dynaamisesti sekvenssin pituuden eli askelten lukumäärän mukaan. 
+Sovelluksen käyttöliittymä koostuu yhdestä näkymästä, jossa kaikki sekvensserin toiminnallisuudet ovat nähtävillä. Sekvensseri-ikkunan koko mukautuu dynaamisesti sekvenssin pituuden ja raitojen määrän eli askeltenruudukon koon mukaan. 
 
 ## Sovelluslogiikka
 Sovellus rakentuu app.py moduulin omistamiin Sequencer ja AudioEngine luokkiin, jotka alustetaan index.py -moduulissa ohjelman käynnistyessä. 
