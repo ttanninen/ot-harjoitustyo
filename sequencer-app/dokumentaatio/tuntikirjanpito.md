@@ -20,4 +20,5 @@
 | 5.5   | 4    | Sekvenssin tallennus ja lataaminen lisätty. |
 | 7.5   | 4    | Unittestien tekoa, docstringejä ja linttausta. |
 | 8.5   | 2    | Dokumentaation laadintaa ja dosctringejä. |
-| YHT.  | 53   | |
+| 9.5   | 3    | Dokumentaation laadintaa. |
+| YHT.  | 56   | |
