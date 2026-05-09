@@ -2,11 +2,12 @@
 
 ## Ohjelman rakenne
 Ohjelman rakenne on kuvattu seuraavassa pakkauskaaviossa:
-\
-<img width="692" height="461" alt="sequencer_app_packages" src="https://github.com/user-attachments/assets/fa720d93-e181-4989-98f3-66a0deb3c200" />
-\
 
-Ohjelma koostuu neljästä pääkomponentista: Sekvensseristä, äänimoottorista, käyttöliittymästä ja tiedostohallinnasta.
+
+<img width="692" height="461" alt="sequencer_app_packages" src="https://github.com/user-attachments/assets/fa720d93-e181-4989-98f3-66a0deb3c200" />
+
+\
+Ohjelma koostuu neljästä pääkomponentista: Sekvensseristä, äänimoottorista, käyttöliittymästä ja tiedostohallinnasta. Ohessa lyhyt kuvaus kaikista komponenteista ja tiedostojen oletushakemistoista.
 
 __App__ on sovelluksen kontekstinhallitsija. Sen tehtävä on alustaa ja omistaa ```AudioEngine``` sekä ```Sequence``` oliot ja käynnistää tai tarvittaessa sulkea äänivirta (audio stream).
 
@@ -36,19 +37,19 @@ __Askelruudukko__ on TKinter-kirjaston grid-elementti, joka jokainen rivi vastaa
 Sekvensseri-ikkunan koko mukautuu dynaamisesti sekvenssin pituuden ja raitojen määrän eli askelruudukon koon mukaan. Raitojen määrää ei ole rajoitettu, mutta sekvenssin maksimipituus on 32 askelta.
 
 ## Sovelluslogiikka
-Sovellus rakentuu app.py moduulin omistamiin Sequencer ja AudioEngine luokkiin, jotka alustetaan index.py -moduulissa ohjelman käynnistyessä. 
+Sovellus rakentuu ```app``` moduulin omistamiin ```Sequencer``` ja ```AudioEngine``` luokkiin, jotka alustetaan ```index``` -moduulissa ohjelman käynnistyessä. 
 
-Pakkaus audioengine on jaettu luokkiin AudioFile ja AudioEnginen. Näiden luokkien metodit luovat toiminnallisuuden wav-tiedostojen käsittelyyn, sekä monen äänen samanaikaiseen toistamiseen. Äänitiedostojen käsittely ja toisto on toteutettu miniaudio-kirjastolla. Miniaudiolla luodaan jatkuva audio stream, joka lähettää ääntä käyttäjän ensisijaiseen äänilaitteeseen. Äänivirtaan lisätyt äänet toistetaan pienellä (oletus: 15 ms) viiveellä, jotta prosessointi ei vaikuta äänen toistoaikaan.
+Pakkaus ```audioengine``` on jaettu luokkiin ```AudioFile``` ja ```AudioEngine```. Näiden luokkien metodit luovat toiminnallisuuden wav-tiedostojen käsittelyyn, sekä monen äänen samanaikaiseen toistamiseen. Äänitiedostojen käsittely ja toisto on toteutettu miniaudio-kirjastolla. Miniaudiolla luodaan jatkuva audio stream, joka lähettää ääntä käyttäjän ensisijaiseen äänilaitteeseen. Äänivirtaan lisätyt äänet toistetaan pienellä (oletus: 15 ms) viiveellä, jotta prosessointi ei vaikuta äänen toistoaikaan.
 
-Pakkaus Sequencer sisältää luokat Track ja Sequence. Käyttäjän luoma sekvenssi rakennetaan muokkaamalla luokan Track-olioita ja lisäämällä niitä luokan Sequence-olioon. Luokka Track sisältää raidalle ladatun äänidatan sekä patternin, jota sekvenssi toistaa. Pattern syötetään listamuodossa, joka muutetaan numpy arrayksi, jossa "0" tarkoittaa tyhjää askelta ja "1" soitettavaa askelta. Track sisältää metodit patternin muokkaamiseen.
+Pakkaus ```Sequencer``` sisältää luokat ```Track``` ja ```Sequence```. Käyttäjän luoma sekvenssi rakennetaan muokkaamalla luokan ```Track```-olioita ja lisäämällä niitä luokan ```Sequence```-olioon omistamaan listaan. Luokka ```Track``` sisältää raidalle ladatun äänidatan sekä askelkuvion, jota sekvenssi toistaa. Askelkuvio syötetään listamuodossa, joka muutetaan numpy taulukoksi, jossa "0" tarkoittaa tyhjää askelta ja "1" soitettavaa askelta. ```Track```sisältää metodit askelkuvion muokkaamiseen.
 
-Sequencer luokka vastaa varsinaisen sekvensserin toiminnasta looppaamalla Track-olioden sisältämiä askelkuvioita läpi ja lähettämällä niiden sisältämiä äänidatatietoja audioenginelle toistoa varten. Sequencer sisältää myös kaikki käyttöliittymälle tarjottavat metodit sekvenssin toistamiseen ja raitojen askelien muokkaamiseen. Sekvenssin asetukset, kuten tempo ja tahtilaji ovat myös muokattavissa käyttöliittymän kautta.
+```Sequencer``` luokka vastaa varsinaisen sekvensserin toiminnasta looppaamalla ```Track```-olioden sisältämiä askelkuvioita läpi ja lähettämällä niiden sisältämiä äänidatatietoja ```audioengine```:lle toistoa varten. ```Sequencer``` sisältää myös kaikki käyttöliittymälle tarjottavat metodit sekvenssin toistamiseen ja raitojen askelien muokkaamiseen. Sekvenssin asetukset, kuten tempo ja tahtilaji ovat myös muokattavissa käyttöliittymän kautta.
 
-Viimeisenä pakkauksena on Files, joka sisältää tiedostojen käsittelyn hoitavat funktiot, eli sekvenssin tallennuksen ja lataamisen sekä wav tiedostojen luonnin. Tiedostohallinnan funktioita kutsutaan käyttöliittymästä.
+Viimeisenä pakkauksena on ```Files```, joka sisältää tiedostojen käsittelyn hoitavat funktiot, eli sekvenssin tallennuksen ja lataamisen sekä wav tiedostojen luonnin. Tiedostohallinnan funktioita kutsutaan käyttöliittymästä.
 
 ## Päätoiminnallisuudet
 
-Ohessa muutamia esimerkkejä sovelluksen toimintalogiikasta:
+Ohessa muutamia sovelluksen toimintaa esitteleviä esimerkkejä toimintalogiikasta:
 
 ### Uuden raidan lisääminen:
 \
