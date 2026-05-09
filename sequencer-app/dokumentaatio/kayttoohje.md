@@ -4,7 +4,7 @@ Ohjelman käyttäminen vaatii Pythonin Poetry pakkaushallintalisäosan asentamis
 
 Lataa viimeisimman [releasen](https://github.com/ttanninen/ot-harjoitustyo/releases) lähdekoodi  tai kloonaa ohjelman repositorio komennolla:
 ```bash
-git clone git@github.com/ttanninen/ot-harjoitustyo/
+git clone git@github.com/ttanninen/ot-harjoitustyo.git
 ```
 
 
