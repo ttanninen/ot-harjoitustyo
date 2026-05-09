@@ -69,3 +69,5 @@ Käyttäjän painaessa ```Save sequence``` nappia, ```UI._save_sequence()``` ava
 - Enkoodaa bufferin sisällön base64-merkkijonoksi.
 - Kerää raidan nimen, äänenvoimakkuuden, panoroinnin, askelkuvion ja enkoodatun äänidatan listaan.
 Tämän jälkeen ```save_sequence()``` konstruoi JSON-objektin joka sisältää sekvenssin asetukset sekä listan raidoista ja kirjoittaa JSON-tiedoston ```json.dump()``` komennolla.
+
+Sekvenssin lataaminen JSON-tiedostosta tekee samat askeleet käänteisessä järjestyksessä sillä erotuksella, että ladatusta sekvenssidatasta luodaan uudet ```Track``` oliot luokkametodilla ```load_track_from_file()``` ja nämä syötetään uuteen ```sequence```olioon.
