@@ -53,6 +53,12 @@ class testSequence(unittest.TestCase):
 
         self.assertEqual(self.sequence.tracks[0].name, "test_name1")
 
+    def test_add_track_with_pattern(self):
+        self.filename = os.path.join(dirname, "testfile.wav")
+        self.sequence.add_track(self.filename, self.track1, pattern=[1,0,0,1])
+
+        self.assertEqual(self.sequence.tracks[0].name, "test_name1")
+
     def test_remove_track(self):
         track = Track(self.filename, "test_name")
         self.sequence.tracks.append(track)
@@ -97,6 +103,21 @@ class testSequence(unittest.TestCase):
         self.sequence.set_length(len(self.sequence.tracks[0].pattern))
 
         self.assertEqual(self.sequence.length(), 0)
+
+    def test_sequence_length_longer(self):
+        self.sequence.add_track(self.filename, self.track1)
+        self.sequence.tracks[0].set_length(18)
+        self.sequence.set_length(len(self.sequence.tracks[0].pattern))
+
+        self.assertEqual(self.sequence.length(), 18)
+
+    def test_sequence_length_new_steps_zeroes(self):
+        self.sequence.set_length(4)
+        self.sequence.add_track(self.filename, self.track1, [1,1,1,1])
+        self.sequence.set_length(8)
+        
+        self.assertTrue(all(self.sequence.tracks[0].pattern[:3]) == 1)
+        self.assertTrue(all(self.sequence.tracks[0].pattern[4:] == 0))
 
     def test_sequence_length_with_filled_track(self):
         self.sequence.add_track(self.filename, self.track1)
@@ -214,3 +235,6 @@ class testSequence(unittest.TestCase):
         self.sequence.play()
 
         self.assertEqual(self.sequence._playing, False)
+
+    def tearDown(self):
+        self.engine.stop()
