@@ -33,7 +33,7 @@ Pakkaus audioengine on jaettu luokkiin AudioFile ja AudioEnginen. Näiden luokki
 
 Pakkaus Sequencer sisältää luokat Track ja Sequence. Käyttäjän luoma sekvenssi rakennetaan muokkaamalla luokan Track-olioita ja lisäämällä niitä luokan Sequence-olioon. Luokka Track sisältää raidalle ladatun äänidatan sekä patternin, jota sekvenssi toistaa. Pattern syötetään listamuodossa, joka muutetaan numpy arrayksi, jossa "0" tarkoittaa tyhjää askelta ja "1" soitettavaa askelta. Track sisältää metodit patternin muokkaamiseen.
 
-Sequencer luokka vastaa varsinaisen sekvensserin toiminnasta looppaamalla Track-olioita läpi ja lähettämällä niiden sisältämiä äänidata tietoja audioenginelle toistoa varten. Sequencer sisältää myös kaikki käyttöliittymälle tarjottavat metodit sekvenssin toistamiseen ja raitojen askelien muokkaamiseen. Sekvenssin asetukset, kuten tempo ja tahtilaji ovat myös muokattavissa käyttöliittymän kautta.
+Sequencer luokka vastaa varsinaisen sekvensserin toiminnasta looppaamalla Track-olioden sisältämiä askelkuvioita läpi ja lähettämällä niiden sisältämiä äänidatatietoja audioenginelle toistoa varten. Sequencer sisältää myös kaikki käyttöliittymälle tarjottavat metodit sekvenssin toistamiseen ja raitojen askelien muokkaamiseen. Sekvenssin asetukset, kuten tempo ja tahtilaji ovat myös muokattavissa käyttöliittymän kautta.
 
 Viimeisenä pakkauksena on Files, joka sisältää tiedostojen käsittelyn hoitavat funktiot, eli sekvenssin tallennuksen ja lataamisen sekä wav tiedostojen luonnin. Tiedostohallinnan funktioita kutsutaan käyttöliittymästä.
 
