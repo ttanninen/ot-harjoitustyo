@@ -53,17 +53,20 @@ Ohessa muutamia sovelluksen toimintaa esitteleviä esimerkkejä toimintalogiikas
 
 ### Uuden raidan lisääminen:
 \
+
 <img width="519" height="361" alt="add_track_diag drawio" src="https://github.com/user-attachments/assets/981bc41f-4441-4f15-8e1a-ddfd4f5aedda" />
-Käyttäjän painaessa "Add Track" nappia käyttöliittymässä aukeaa TKinterin file dialog window. Valittava tiedostomuoto on wav tiedosto. UI palauttaa tiedoston nimen Sequencer-oliolle joka kutsuu load_sound() metodia AudioEngine pakkauksesta (muutetaan myöhemmin omaan tiedostojen käsittelypakkaukseen). Metodi load_sound() tarkistaa että tiedosto on oikeanlainen ja nostaa ValueError virheilmoituksen, mikäli näin ei ole. Mikäli tiedosto on soveltuva, siitä muodostetaan Track-olio, joka lisätään sekvenssiin uudeksi raidaksi. Lopuksi UI kutsuu rebuild_grid() metodia, jolla sekvensserin näkymä päivitetään uuden raidan kanssa.
+Käyttäjän painaessa ```Add Track``` nappia käyttöliittymässä aukeaa TKinterin file dialog window. Valittava tiedostomuoto on wav tiedosto. UI palauttaa tiedoston nimen ```Sequencer```-oliolle joka kutsuu ```load_sound()``` metodia ```AudioEngine``` pakkauksesta. Metodi ```load_sound()``` tarkistaa että tiedosto on oikeanlainen ja nostaa ```ValueError``` virheilmoituksen, mikäli näin ei ole. Mikäli tiedosto on soveltuva, siitä muodostetaan ```Track```-olio, joka lisätään sekvenssiin uudeksi raidaksi. Lopuksi ```UI``` kutsuu ```rebuild_grid()``` metodia, jolla sekvensserin näkymä päivitetään uuden raidan kanssa.
 
 
 ### Sekvenssin käynnistäminen ja äänen toisto:
 \
+
 <img width="779" height="264" alt="play_sound_diagram" src="https://github.com/user-attachments/assets/36433a85-66a3-41c1-ad68-6a8994b35557" />
 Käyttäjän painaessa ```Play``` nappia käyttöliittymässä, ```UI._play()``` kutsuu sekvenssin ```Sequence.play()``` funktiota joka käynnistää sekvenssin ```_play_loop()``` metodin omassa säikeessään. ```_play_loop()``` käy sekvenssin askeleita läpi yksi kerrallaan. Jokaisen askeleen kohdalla se tarkistaa mitkä raidat ovat aktiivisia kyseisellä askeleella ja lähettää aktiivisten raitojen äänidatan ```AudioEnginelle```. Metodi ```AudioEngine.play()``` laittaa äänidatan jonoon, josta generaattori poimii sen ja miksaa äänivirran bufferiin. ```_play_loop()``` odottaa joka askeleen jälkeen sekvenssin tempon ja tahtilajin mukaisen ajan ennen siirtymistä seuraavaan askeleeseen. ```UI._poll_step()``` lukee tasaisin väliajoin (16ms) sekvenssin ```current_step```arvon ja päivittää askelindikaattorin valon näytölle.
 
 ### Sekvenssin tallentaminen: ###
 \
+
 <img width="710" height="362" alt="save_sequence_diag (1)" src="https://github.com/user-attachments/assets/24cb6ea7-591b-44d6-a0db-9cf05efee28e" />
 Käyttäjän painaessa ```Save sequence``` nappia, ```UI._save_sequence()``` avaa TKinterin file dialog windowin. Käyttäjän valittua tallennushakemiston ja tiedoston nimen, kutsutaan ```save_sequence(sequence,filename)``` funktiota ```files``` moduulista. Tämä käy läpi kaikki sekvenssin raidat ja tekee jokaiselle raidalle seuraavat toimenpiteet:
 - Kirjoittaa äänidatan BytesIO-bufferiin käyttäen ```scipy.io.wavfile.write()``` -funktiota.
