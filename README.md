@@ -2,17 +2,7 @@
 
 **Yksinkertainen sampleri / sekvensseri**
 
-Sekvensseri toistaa äänitiedostoja järjestyksessä ja samanaikaisesti. Ohjelmalla voi ohjelmoida esimerkiksi lyhyitä rumpukomppeja.
-Käyttöliittymä toteutetaan TKinterillä ja äänien toistoon käytetään miniaudio-kirjastoa.
-
-Ominaisuuksia:
-
-- Samplejen lataaminen
-- Raidan äänentason säätäminen
-- Hiirellä käytettävä käyttöliittymä
-- Gridin pituuden määritteleminen (Esim. 0-16 askelta)
-- Sekvenssin tallentaminen .wav:iksi (Todo)
-- Sekvenssin looppaaminen
+Sekvensseri toistaa äänitiedostoja järjestyksessä. Ohjelmalla voi ohjelmoida esimerkiksi lyhyitä rumpukomppeja.
 
 ## Asennus ja käynnistys
 
