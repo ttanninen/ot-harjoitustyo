@@ -1,9 +1,13 @@
 # Käyttöohje
 
-Lataa viimeisin [release](https://github.com/ttanninen/ot-harjoitustyo/releases) tai kloonaa ohjelman repositorio komennolla:
+Ohjelman käyttäminen vaatii Pythonin Poetry pakkaushallintalisäosan asentamista. Ohjeet asennukseen löytyvät [täältä](https://python-poetry.org/docs/).
+
+Lataa viimeisimman [releasen](https://github.com/ttanninen/ot-harjoitustyo/releases) lähdekoodi  tai kloonaa ohjelman repositorio komennolla:
 ```bash
 git clone git@github.com/ttanninen/ot-harjoitustyo/
 ```
+
+
 ## Asennus ja käynnistys
 
 Ohjelma sijaitsee kansiossa ```/sequencer-app/```, jossa kaikki mainitut komennot tulee suorittaa.
