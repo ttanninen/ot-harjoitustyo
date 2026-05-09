@@ -1,6 +1,10 @@
-from services.sequencer import Sequence
-from services.audioengine import AudioEngine
+import os
 
+from services.audioengine import AudioEngine
+from services.files import load_sequence
+
+dirname = os.path.dirname(__file__)
+default = os.path.join(dirname, "projects", "default.seqjson")
 
 class App:
     def __init__(self):
@@ -8,7 +12,7 @@ class App:
     It hosts the instances of audio engine and the sequence.
         """
         self.engine = AudioEngine()
-        self.sequence = Sequence(bpm=120, steps_per_beat=4, engine=self.engine)
+        self.sequence = (load_sequence(self.engine, default))
 
     def start(self):
         self.engine.start()
