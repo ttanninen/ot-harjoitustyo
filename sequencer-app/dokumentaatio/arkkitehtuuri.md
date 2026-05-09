@@ -55,6 +55,8 @@ Käyttäjän painaessa "Add Track" nappia käyttöliittymässä aukeaa TKinterin
 Käyttäjän painaessa ```Play``` nappia käyttöliittymässä, ```UI._play()``` kutsuu sekvenssin ```Sequence.play()``` funktiota joka käynnistää sekvenssin ```_play_loop()``` metodin omassa säikeessään. ```_play_loop()``` käy sekvenssin askeleita läpi yksi kerrallaan. Jokaisen askeleen kohdalla se tarkistaa mitkä raidat ovat aktiivisia kyseisellä askeleella ja lähettää aktiivisten raitojen äänidatan ```AudioEnginelle```. Metodi ```AudioEngine.play()``` laittaa äänidatan jonoon, josta generaattori poimii sen ja miksaa äänivirran bufferiin. ```_play_loop()``` odottaa joka askeleen jälkeen sekvenssin tempon ja tahtilajin mukaisen ajan ennen siirtymistä seuraavaan askeleeseen. ```UI._poll_step()``` lukee tasaisin väliajoin (16ms) sekvenssin ```current_step```arvon ja päivittää askelindikaattorin valon näytölle.
 
 ### Sekvenssin tallentaminen: ###
+\
+<img width="710" height="362" alt="save_sequence_diag (1)" src="https://github.com/user-attachments/assets/24cb6ea7-591b-44d6-a0db-9cf05efee28e" />
 Käyttäjän painaessa ```Save sequence``` nappia, ```UI._save_sequence()``` avaa TKinterin file dialog windowin. Käyttäjän valittua tallennushakemiston ja tiedoston nimen, kutsutaan ```save_sequence(sequence,filename)``` funktiota ```files``` moduulista. Tämä käy läpi kaikki sekvenssin raidat ja tekee jokaiselle raidalle seuraavat toimenpiteet:
 - Kirjoittaa äänidatan BytesIO-bufferiin käyttäen ```scipy.io.wavfile.write()``` -funktiota.
 - Enkoodaa bufferin sisällön base64-merkkijonoksi.
