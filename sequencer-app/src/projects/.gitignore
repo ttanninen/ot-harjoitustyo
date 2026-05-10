@@ -1,3 +1,4 @@
 *
 !.gitignore
+!empty.seqjson
 !default.seqjson
