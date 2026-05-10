@@ -13,12 +13,18 @@ Käyttöliittymä ```ui``` ja sovelluksen pääloopin käynnistävä pakkaus ```
 
 ## Testikattavuus ##
 
-Ilman käyttöliittymää ja ```index``` pakkausta ohjelman haaraumakattavuus on 93%.
+Ilman käyttöliittymää ohjelman automaattitestien haaraumakattavuus on 93%.
 
 <img width="617" height="311" alt="image" src="https://github.com/user-attachments/assets/9235e6d3-205a-4e85-aaf4-c8714a2c859f" />
 
+Testaamatta jäivät ohjelmaloopin käynnistävä ```index``` pakkaus, sekä ```Audioengine``` luokan olion generaattorifunktion osa, joka tarkistaa, onko audio streamin jonossa ääniä, joiden soiminen ei ole vielä päättynyt. Tämän toimivuus on kuitenkin varmistettu manuaalisesti ohjelmaa testatessa.
 
 
 ## Järjestelmätestaus ##
 
-Ohjelma on asennettu ja testattu käyttöohjeiden mukaisesti alusta alkaen windows ja linux ympäristöissä.
+Ohjelman toimivuus on testattu asentamalla se käyttöohjeiden mukaisesti windows ja linux ympäristöihin ja manuaalisesti testaamalla ominaisuuksien toimivuutta eri syötteillä ja skenaarioilla.
+
+
+## Laatuongelmat ##
+
+Ohjelman sekvenssin raitojen määrää ei ole rajoitettu, mutta käyttöliittymää tai äänimoottorin toimintaa ei ole testattu tai suunniteltu valtavien raita/audiomäärien käsittelyyn. ohjelman äänimoottori on yksinkertainen ja erityisesti ohjelman juuri käynnistyttyä askelten toistossa on kuultavissa pientä heiluntaa ja nykimistä. Tämä kuitenkin poistuu yleensä ensimmäisen loopin jälkeen. 
