@@ -28,3 +28,5 @@ Ohjelman toimivuus on testattu asentamalla se käyttöohjeiden mukaisesti window
 ## Laatuongelmat ##
 
 Ohjelman sekvenssin raitojen määrää ei ole rajoitettu, mutta käyttöliittymää tai äänimoottorin toimintaa ei ole testattu tai suunniteltu valtavien raita/audiomäärien käsittelyyn. ohjelman äänimoottori on yksinkertainen ja erityisesti ohjelman juuri käynnistyttyä askelten toistossa on kuultavissa pientä heiluntaa ja nykimistä. Tämä kuitenkin poistuu yleensä ensimmäisen loopin jälkeen. 
+
+Tarkkakorvaiset sekvensseriohjelmoijat myös varmasti huomaavat, että sekvenssissä on kuultavissa aina pieni keinunta (shuffle), eikä askelten ajoitus ole siis aivan millisekunnin tarkkaa. 
