@@ -50,3 +50,4 @@ poetry run invoke lint
 - [Tuntikirjanpito](/sequencer-app/dokumentaatio/tuntikirjanpito.md)
 - [Changelog](/sequencer-app/dokumentaatio/changelog.md)
 - [Arkkitehtuuri](/sequencer-app/dokumentaatio/arkkitehtuuri.md)
+- [Testausdokumentt9](/sequencer-app/dokumentaatio/arkkitehtuuri.md)
