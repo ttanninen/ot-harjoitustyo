@@ -12,7 +12,7 @@ class App:
     It hosts the instances of audio engine and the sequence.
         """
         self.engine = AudioEngine()
-        self.sequence = (load_sequence(self.engine, default))
+        self.sequence = load_sequence(self.engine, default)
 
     def start(self):
         self.engine.start()
