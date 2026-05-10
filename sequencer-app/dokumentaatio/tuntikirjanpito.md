@@ -21,4 +21,5 @@
 | 7.5   | 4    | Unittestien tekoa, docstringejä ja linttausta. |
 | 8.5   | 2    | Dokumentaation laadintaa ja dosctringejä. |
 | 9.5   | 3    | Dokumentaation laadintaa. |
-| YHT.  | 56   | |
+| 10.5  | 2    | Dokumentaation laadintaa ja final releasen viimeistely. |
+| YHT.  | 58   | |
