@@ -4,10 +4,10 @@ Ohjelmaa on testattu perusteellisesti automaattisilla unittesteillä sekä manua
 
 ## Yksikkö- ja integraatiotestaus ##
 
-Jokaiselle sovelluslogiikasta vastaavalle pakkaukselle on laadittu automaattiset yksikkö- ja integraatiotestit. Sovelluslogiikan testeissä hyödynnetään soveltuvissa kohdissa testiäänitiedostoja.  ```Audioengine_test``` testaa luokkien ```Audio_file``` ja ```AudioEngine``` toimivuutta, sekä näiden yhteistoimintaa pakkauksen ```sequencer``` olioiden kanssa.
-Vastaavasti pakkaus ```sequencer_test``` testaa luokkien ```Track``` ja ```Sequence``` omia toimintoja sekä niiden toimivuutta ```AudioEngine``` pakkauksen kanssa. Sovelluksen kontekstihallinnan pakkausta ```app``` testataan pakkauksella ```app_test```.
+Jokaiselle sovelluslogiikasta vastaavalle pakkaukselle on laadittu automaattiset yksikkö- ja integraatiotestit. Sovelluslogiikan testeissä hyödynnetään soveltuvissa kohdissa testiäänitiedostoja.  [Audioengine_test](https://github.com/ttanninen/ot-harjoitustyo/blob/main/sequencer-app/src/tests/audioengine_test.py) testaa luokkien ```Audio_file``` ja ```AudioEngine``` toimivuutta, sekä näiden yhteistoimintaa pakkauksen ```sequencer``` olioiden kanssa.
+Vastaavasti pakkaus [sequencer_test](https://github.com/ttanninen/ot-harjoitustyo/blob/main/sequencer-app/src/tests/sequencer_test.py) testaa luokkien ```Track``` ja ```Sequence``` omia toimintoja sekä niiden toimivuutta ```AudioEngine``` pakkauksen kanssa. Sovelluksen kontekstihallinnan pakkausta ```app``` testataan pakkauksella [app_test](https://github.com/ttanninen/ot-harjoitustyo/blob/main/sequencer-app/src/tests/app_test.py).
 
-Viimeisimpänä testipakkauksena on ```files_test```, joka sisältää yksikkö- ja integraatiotestit tiedostojen käsittelymetodeille. Nämä testit luovat automaattitestauksessa testitiedostot, jotka poistetaan jokaisen testin jälkeen. 
+Viimeisimpänä testipakkauksena on [files_test](https://github.com/ttanninen/ot-harjoitustyo/blob/main/sequencer-app/src/tests/files_test.py), joka sisältää yksikkö- ja integraatiotestit tiedostojen käsittelymetodeille. Nämä testit luovat automaattitestauksessa testitiedostot, jotka poistetaan jokaisen testin jälkeen. 
 
 Käyttöliittymä ```ui``` ja sovelluksen pääloopin käynnistävä pakkaus ```index``` on jätetty testikattavuuden ulkopuolelle.
 
