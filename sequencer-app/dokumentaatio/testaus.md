@@ -22,7 +22,7 @@ Testaamatta jäivät ohjelmaloopin käynnistävä ```index``` pakkaus, sekä ```
 
 ## Järjestelmätestaus ##
 
-Ohjelman toimivuus on testattu asentamalla se käyttöohjeiden mukaisesti windows ja linux ympäristöihin ja manuaalisesti testaamalla ominaisuuksien toimivuutta eri syötteillä ja skenaarioilla.
+Ohjelman toimivuus on testattu asentamalla se [käyttöohjeiden](https://github.com/ttanninen/ot-harjoitustyo/blob/main/sequencer-app/dokumentaatio/kayttoohje.md) mukaisesti windows ja linux ympäristöihin ja manuaalisesti testaamalla [vaatimusmäärittelyssä](https://github.com/ttanninen/ot-harjoitustyo/blob/main/sequencer-app/dokumentaatio/vaatimusmaarittely.md) lueteltujen ominaisuuksien toimivuutta eri syötteillä ja skenaarioilla.
 
 
 ## Laatuongelmat ##
